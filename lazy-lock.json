@@ -38,7 +38,6 @@
   "vim-nix": { "branch": "master", "commit": "e25cd0f2e5922f1f4d3cd969f92e35a9a327ffb0" },
   "vim-racket": { "branch": "master", "commit": "2c7ec0f35a2ad1ca00305e5d67837bc1f1d4b6cc" },
   "vim-repeat": { "branch": "master", "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
-  "vim-startuptime": { "branch": "master", "commit": "ac2cccb5be617672add1f4f3c0a55ce99ba34e01" },
   "which-key.nvim": { "branch": "main", "commit": "af4ded85542d40e190014c732fa051bdbf88be3d" },
   "zenbones.nvim": { "branch": "main", "commit": "e9ba8305f65524f9355515cdd8704b2c6ba2def6" },
   "zk-nvim": { "branch": "main", "commit": "15e24e96cb90889ebd12b5dbe800a958c716f520" }
