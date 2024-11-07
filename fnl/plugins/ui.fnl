@@ -23,24 +23,24 @@
 
    {1 "nvim-lualine/lualine.nvim"
     :dependencies ["nvim-tree/nvim-web-devicons"]
-    :config
+    :opts
     {:options {:globalstatus true
                :theme "zenwritten"}
      : sections}})
  {1 "b0o/incline.nvim"
-  :config {:hide {:cursorline true}
-           :window {:margin {:vertical {:top 0 :bottom 0}
-                             :horizontal {:left 0 :right 0}}
-                    :padding {:left 1 :right 1}}
-                    ; :padding_char ""
-           :render (fn [props]
-                     (let [filename (-> props.buf
-                                        (vim.api.nvim_buf_get_name)
-                                        (vim.fn.fnamemodify ":~:."))
-                           indicator (if (. vim.bo props.buf :modified) " ●"
-                                         (. vim.bo props.buf :readonly) " 󰌾"
-                                         "")]
-                       [filename indicator]))}}
+  :opts {:hide {:cursorline true}
+         :window {:margin {:vertical {:top 0 :bottom 0}
+                           :horizontal {:left 0 :right 0}}
+                  :padding {:left 1 :right 1}}
+                  ; :padding_char ""
+         :render (fn [props]
+                   (let [filename (-> props.buf
+                                      (vim.api.nvim_buf_get_name)
+                                      (vim.fn.fnamemodify ":~:."))
+                         indicator (if (. vim.bo props.buf :modified) " ●"
+                                       (. vim.bo props.buf :readonly) " 󰌾"
+                                       "")]
+                     [filename indicator]))}}
  {1 "stevearc/dressing.nvim"
   :dependencies ["nvim-telescope/telescope.nvim"]
   :config

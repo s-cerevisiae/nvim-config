@@ -10,7 +10,7 @@ local function bootstrap(plugin)
     vim.fn.system({"git", "clone", "--filter=blob:none", "--single-branch", ("https://github.com/" .. plugin), plugin_path})
   else
   end
-  return (vim.opt.runtimepath):prepend(plugin_path)
+  return vim.opt.runtimepath:prepend(plugin_path)
 end
 bootstrap("folke/lazy.nvim")
 local function _3_(_241, _242)
@@ -29,7 +29,7 @@ local function prequire(mod)
 end
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-do end (require("lazy")).setup("plugins")
+require("lazy").setup("plugins")
 prequire("config.options")
 prequire("config.events")
 prequire("config.commands")

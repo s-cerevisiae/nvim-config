@@ -16,6 +16,6 @@ local function set_scrolloff()
   vim.wo.scrolloff = quotient(height, 5)
   return nil
 end
-local _2_ = augroup("SetScrollOff")
-autocmd_21(_2_, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
-return _2_
+local tmp_9_auto = augroup("SetScrollOff")
+autocmd_21(tmp_9_auto, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
+return tmp_9_auto

@@ -15,7 +15,7 @@ do
   else
     sections = line_full
   end
-  _1_ = {"nvim-lualine/lualine.nvim", dependencies = {"nvim-tree/nvim-web-devicons"}, config = {options = {globalstatus = true, theme = "zenwritten"}, sections = sections}}
+  _1_ = {"nvim-lualine/lualine.nvim", dependencies = {"nvim-tree/nvim-web-devicons"}, opts = {options = {globalstatus = true, theme = "zenwritten"}, sections = sections}}
 end
 local function _4_(props)
   local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":~:.")
@@ -30,6 +30,6 @@ local function _4_(props)
   return {filename, indicator}
 end
 local function _6_()
-  return (require("dressing")).setup({select = {telescope = {layout_config = (require("telescope.config")).values.layout_config}}})
+  return require("dressing").setup({select = {telescope = {layout_config = require("telescope.config").values.layout_config}}})
 end
-return {_1_, {"b0o/incline.nvim", config = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"stevearc/dressing.nvim", dependencies = {"nvim-telescope/telescope.nvim"}, config = _6_}, "kevinhwang91/nvim-bqf"}
+return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"stevearc/dressing.nvim", dependencies = {"nvim-telescope/telescope.nvim"}, config = _6_}, "kevinhwang91/nvim-bqf"}

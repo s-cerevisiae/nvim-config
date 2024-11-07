@@ -42,7 +42,7 @@ local function _10_()
   return diagnostics({bufnr = 0})
 end
 local function _11_()
-  return (require("conform")).format({lsp_fallback = true, async = true})
+  return require("conform").format({lsp_fallback = true, stop_after_first = true, async = true})
 end
 local function _12_()
   return vim.lsp.buf.document_highlight()

@@ -41,6 +41,7 @@
             "d" [#(diagnostics {:bufnr 0}) "Show diagnostics"]
             "f" [#((require. :conform :format)
                    {:lsp_fallback true
+                    :stop_after_first true
                     :async true})
                  "Format buffer"]
             "h" [#(vim.lsp.buf.document_highlight) "Document highlight"]

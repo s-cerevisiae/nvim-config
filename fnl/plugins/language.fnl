@@ -16,10 +16,6 @@
      (setup-lsp "racket_langserver"
       {: capabilities
        :filetypes ["racket"]})
-     (setup-lsp "tsserver"
-      {: capabilities
-       :root_dir (lspconfig.util.root_pattern "package.json")
-       :single_file_support false})
      (setup-lsp "denols"
       {: capabilities
        :root_dir (lspconfig.util.root_pattern "deno.json" "deno.jsonc")
@@ -34,6 +30,13 @@
        :single_file_support true})
      (each [_ srv (ipairs ["clangd" "ocamllsp" "hls" "pyright" "nil_ls" "rescriptls"])]
        (setup-lsp srv {: capabilities})))}
+ {1 "pmizio/typescript-tools.nvim"
+  :dependencies ["nvim-lua/plenary.nvim"
+                 "neovim/nvim-lspconfig"]
+  :opts #{:capabilities (get-cap)
+          :root_dir ((. (require :lspconfig) :util :root_pattern) "package.json")
+          :single_file_support false
+          :settings {:tsserver_max_memory 4096}}}
  "mrcjkb/rustaceanvim"
  {1 "j-hui/fidget.nvim"
   :tag "legacy"
@@ -73,7 +76,7 @@
           {:formatters_by_ft
            (vim.tbl_extend "keep"
              (collect [_ ft (pairs web-fts)]
-               ft [["biome" "prettier"]])
+               ft ["biome" "prettier"])
              (collect [_ ft (pairs web-extra-fts)]
                ft ["prettier"])
              {:python ["ruff_format"]})})}]

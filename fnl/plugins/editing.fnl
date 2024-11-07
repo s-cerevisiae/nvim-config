@@ -3,7 +3,7 @@
   #(let [leap (require :leap)]
      (leap.add_default_mappings))}
  {1 "kylechui/nvim-surround"
-  :config
+  :opts
   ;; Todo: use <leader>
   {:keymaps {:normal " s"
              :normal_cur " ss"
@@ -14,7 +14,7 @@
              :delete "d s"
              :change "c s"}}}
  {1 "numToStr/Comment.nvim"
-  :config {:ignore "^$"}}
+  :opts {:ignore "^$"}}
  {1 "hrsh7th/nvim-insx"
   :config
   #(let [insx (require :insx)

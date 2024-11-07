@@ -3,15 +3,15 @@ local _local_1_ = require("utils")
 local augroup = _local_1_["augroup"]
 local autocmd_21 = _local_1_["autocmd!"]
 do
-  local _2_ = augroup("YankHighlight")
-  local function _3_()
+  local tmp_9_auto = augroup("YankHighlight")
+  local function _2_()
     return vim.highlight.on_yank()
   end
-  autocmd_21(_2_, "TextYankPost", "*", _3_)
+  autocmd_21(tmp_9_auto, "TextYankPost", "*", _2_)
 end
-local _4_ = augroup("DocumentHighlight")
-local function _5_()
+local tmp_9_auto = augroup("DocumentHighlight")
+local function _3_()
   return vim.lsp.buf.clear_references()
 end
-autocmd_21(_4_, {"CursorMoved", "InsertEnter"}, "*", _5_)
-return _4_
+autocmd_21(tmp_9_auto, {"CursorMoved", "InsertEnter"}, "*", _3_)
+return tmp_9_auto

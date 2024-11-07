@@ -27,13 +27,12 @@ local function _2_()
     return insx.add("<BS>", soft_delete(pats))
   end
   for _, _5_ in ipairs({{"(", ")"}, {"[", "]"}, {"{", "}"}}) do
-    local _each_6_ = _5_
-    local l = _each_6_[1]
-    local r = _each_6_[2]
+    local l = _5_[1]
+    local r = _5_[2]
     auto_pair_21(l, r)
     fast_break_21(l, r)
     delete_pair_21(l, r)
   end
   return nil
 end
-return {{"ggandor/leap.nvim", config = _1_}, {"kylechui/nvim-surround", config = {keymaps = {normal = " s", normal_cur = " ss", normal_line = " S", normal_cur_line = " SS", visual = " s", visual_line = " S", delete = "d s", change = "c s"}}}, {"numToStr/Comment.nvim", config = {ignore = "^$"}}, {"hrsh7th/nvim-insx", config = _2_}, "eraserhd/parinfer-rust", "tpope/vim-repeat"}
+return {{"ggandor/leap.nvim", config = _1_}, {"kylechui/nvim-surround", opts = {keymaps = {normal = " s", normal_cur = " ss", normal_line = " S", normal_cur_line = " SS", visual = " s", visual_line = " S", delete = "d s", change = "c s"}}}, {"numToStr/Comment.nvim", opts = {ignore = "^$"}}, {"hrsh7th/nvim-insx", config = _2_}, "eraserhd/parinfer-rust", "tpope/vim-repeat"}

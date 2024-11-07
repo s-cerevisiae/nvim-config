@@ -1,6 +1,6 @@
 [{1 "akinsho/toggleterm.nvim"
   :cmd "ToggleTerm"
-  :config
+  :opts
   {:size (fn [term]
            (match term.direction
              :horizontal (quotient vim.o.lines 4)
