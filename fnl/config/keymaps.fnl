@@ -21,6 +21,10 @@
   #(vim.snippet.jump -1)
   {:expr true :silent true})
 
+;; Flash "remote" actions
+(vim.keymap.set ["o"] "r"
+  #((require. :flash :remote)))
+
 (let [wk (require :which-key)
       {: find_files
        : diagnostics

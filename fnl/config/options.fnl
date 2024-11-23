@@ -50,6 +50,9 @@
   :splitright true
   :splitbelow true
 
+  ;; Enable ignores for ripgrep
+  :grepprg "rg --vimgrep --hidden"
+
   ;; Compatible with nushell and powershell,
   ;; does not work with cmd.exe
   :shellxquote ""

@@ -49,4 +49,6 @@
      {:telescope
       {:layout_config
        (require. :telescope.config :values :layout_config)}}})}
+ {1 "j-hui/fidget.nvim"
+  :opts {:notification {:override_vim_notify true}}}
  "kevinhwang91/nvim-bqf"]

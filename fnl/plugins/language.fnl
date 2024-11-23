@@ -1,13 +1,11 @@
 (import-macros {: require.} :macros)
 
 (fn get-cap []
-  (vim.tbl_deep_extend "force"
-    (vim.lsp.protocol.make_client_capabilities)
-    ((require. :cmp_nvim_lsp :default_capabilities))))
+  ((require. :blink.cmp :get_lsp_capabilities)
+   (vim.lsp.protocol.make_client_capabilities)))
 
 [;; Langservers
  {1 "neovim/nvim-lspconfig"
-  :dependencies ["hrsh7th/cmp-nvim-lsp"]
   :config
   #(let [lspconfig (require :lspconfig)
          capabilities (get-cap)]
@@ -20,7 +18,7 @@
       {: capabilities
        :root_dir (lspconfig.util.root_pattern "deno.json" "deno.jsonc")
        :single_file_support false})
-     (setup-lsp "ruff_lsp"
+     (setup-lsp "ruff"
       {:on_attach (fn [client bufnr]
                     (set client.server_capabilities.hoverProvider false))})
      (setup-lsp "pyright"
@@ -38,9 +36,6 @@
           :single_file_support false
           :settings {:tsserver_max_memory 4096}}}
  "mrcjkb/rustaceanvim"
- {1 "j-hui/fidget.nvim"
-  :tag "legacy"
-  :config true}
  {1 "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
   :config
   #(do

@@ -1,6 +1,6 @@
 -- [nfnl] Compiled from fnl/plugins/language.fnl by https://github.com/Olical/nfnl, do not edit.
 local function get_cap()
-  return vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), require("cmp_nvim_lsp").default_capabilities())
+  return require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 end
 local function _1_()
   local lspconfig = require("lspconfig")
@@ -14,7 +14,7 @@ local function _1_()
     client.server_capabilities.hoverProvider = false
     return nil
   end
-  setup_lsp("ruff_lsp", {on_attach = _2_})
+  setup_lsp("ruff", {on_attach = _2_})
   setup_lsp("pyright", {settings = {python = {analysis = {ignore = "*"}}}})
   setup_lsp("tinymist", {capabilities = capabilities, single_file_support = true})
   for _, srv in ipairs({"clangd", "ocamllsp", "hls", "pyright", "nil_ls", "rescriptls"}) do
@@ -71,4 +71,4 @@ do
   end
   _9_ = {formatters_by_ft = vim.tbl_extend("keep", _10_, _12_, {python = {"ruff_format"}})}
 end
-return {{"neovim/nvim-lspconfig", dependencies = {"hrsh7th/cmp-nvim-lsp"}, config = _1_}, {"pmizio/typescript-tools.nvim", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _3_}, "mrcjkb/rustaceanvim", {"j-hui/fidget.nvim", tag = "legacy", config = true}, {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = _4_}, "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", config = _5_}, {"mickael-menu/zk-nvim", config = _8_}, {"stevearc/conform.nvim", opts = _9_}}
+return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _3_}, "mrcjkb/rustaceanvim", {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = _4_}, "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", config = _5_}, {"mickael-menu/zk-nvim", config = _8_}, {"stevearc/conform.nvim", opts = _9_}}

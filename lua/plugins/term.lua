@@ -9,4 +9,4 @@ local function _1_(term)
     return nil
   end
 end
-return {{"akinsho/toggleterm.nvim", cmd = "ToggleTerm", opts = {size = _1_, float_opts = {border = "curved"}}}}
+return {{"akinsho/toggleterm.nvim", cmd = "ToggleTerm", opts = {size = _1_, float_opts = {border = "curved"}, persist_mode = false}}}

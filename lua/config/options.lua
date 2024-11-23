@@ -8,7 +8,7 @@ local function set_options(options)
   end
   return nil
 end
-set_options({number = true, relativenumber = true, numberwidth = 3, signcolumn = "number", cursorline = true, tabstop = 4, shiftwidth = 4, expandtab = true, termguicolors = true, mouse = "a", undofile = true, ignorecase = true, smartcase = true, complete = "", updatetime = 300, list = true, listchars = "tab:>-,trail:\195\151,nbsp:+", showtabline = 0, pumheight = 10, splitright = true, splitbelow = true, shellxquote = "", shellcmdflag = "-c", exrc = true, showmode = false})
+set_options({number = true, relativenumber = true, numberwidth = 3, signcolumn = "number", cursorline = true, tabstop = 4, shiftwidth = 4, expandtab = true, termguicolors = true, mouse = "a", undofile = true, ignorecase = true, smartcase = true, complete = "", updatetime = 300, list = true, listchars = "tab:>-,trail:\195\151,nbsp:+", showtabline = 0, pumheight = 10, splitright = true, splitbelow = true, grepprg = "rg --vimgrep --hidden", shellxquote = "", shellcmdflag = "-c", exrc = true, showmode = false})
 local function set_scrolloff()
   local width = vim.api.nvim_win_get_width(0)
   local height = vim.api.nvim_win_get_height(0)

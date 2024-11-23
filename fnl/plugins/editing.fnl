@@ -1,18 +1,15 @@
-[{1 "ggandor/leap.nvim"
-  :config
-  #(let [leap (require :leap)]
-     (leap.add_default_mappings))}
+[{1 "folke/flash.nvim"
+  :opts {:modes {:search {:enabled true}
+                 :char {:enabled false}}
+         :prompt {:enabled true
+                  :prefix [["r/" "FlashPromptIcon"]]}}}
  {1 "kylechui/nvim-surround"
-  :opts
-  ;; Todo: use <leader>
-  {:keymaps {:normal " s"
-             :normal_cur " ss"
-             :normal_line " S"
-             :normal_cur_line " SS"
-             :visual " s"
-             :visual_line " S"
-             :delete "d s"
-             :change "c s"}}}
+  :opts {:keymaps {:normal "s"
+                   :normal_cur "ss"
+                   :normal_line "S"
+                   :normal_cur_line "SS"
+                   :visual "s"
+                   :visual_line "S"}}}
  {1 "numToStr/Comment.nvim"
   :opts {:ignore "^$"}}
  {1 "hrsh7th/nvim-insx"
