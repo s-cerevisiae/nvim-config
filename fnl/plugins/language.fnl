@@ -1,8 +1,9 @@
-(import-macros {: require.} :macros)
+(import-macros {: dot} :macros)
 
 (fn get-cap []
-  ((require. :blink.cmp :get_lsp_capabilities)
-   (vim.lsp.protocol.make_client_capabilities)))
+  (dot (require :blink.cmp)
+       (get_lsp_capabilities
+         (vim.lsp.protocol.make_client_capabilities))))
 
 [;; Langservers
  {1 "neovim/nvim-lspconfig"
@@ -32,14 +33,14 @@
   :dependencies ["nvim-lua/plenary.nvim"
                  "neovim/nvim-lspconfig"]
   :opts #{:capabilities (get-cap)
-          :root_dir ((. (require :lspconfig) :util :root_pattern) "package.json")
+          :root_dir (dot (require :lspconfig) util (root_pattern "package.json"))
           :single_file_support false
           :settings {:tsserver_max_memory 4096}}}
  "mrcjkb/rustaceanvim"
  {1 "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
   :config
   #(do
-     ((require. :lsp_lines :setup))
+     (dot (require :lsp_lines) (setup))
      (vim.diagnostic.config {:virtual_lines false}))}
 
  ;; Language plugins
@@ -50,16 +51,16 @@
  {1 "Vigemus/iron.nvim"
   :cmd :IronRepl
   :config
-  #((. (require :iron.core) :setup)
+  #((dot (require :iron.core) setup)
     {:config
      {:repl_definition
       {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
        :python {:command #(or vim.g.iron#cmd#python ["python"])}}
-      :repl_open_cmd ((. (require :iron.view) :split) "25%")}})}
+      :repl_open_cmd (dot (require :iron.view) (split "25%"))}})}
  {1 "mickael-menu/zk-nvim"
   :config
-  #((. (require :zk) :setup)
-    {:picker "telescope"})}
+  #(dot (require :zk)
+        (setup {:picker "telescope"}))}
 
  ;; Formatter
  {1 "stevearc/conform.nvim"

@@ -1,10 +1,10 @@
-(import-macros {: require.} :macros)
+(import-macros {: dot} :macros)
 
 [{1 "nvim-treesitter/nvim-treesitter"
   :dependencies ["nvim-treesitter/nvim-treesitter-textobjects"]
   :build ":TSUpdate"
   :config
-  #((require. :nvim-treesitter.configs :setup)
+  #((dot (require :nvim-treesitter.configs) setup)
     {:ensure_installed ["vimdoc"
                         "markdown"
                         "c"

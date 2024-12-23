@@ -1,3 +1,5 @@
+(import-macros {: dot} :macros)
+
 (vim.loader.enable)
 
 (fn bootstrap [plugin]
@@ -25,7 +27,7 @@
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
 
-((. (require :lazy) :setup) "plugins")
+(dot (require :lazy) (setup "plugins"))
 
 (prequire :config.options)
 (prequire :config.events)

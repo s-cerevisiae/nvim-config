@@ -1,4 +1,4 @@
-(import-macros {: require.} :macros)
+(import-macros {: dot} :macros)
 
 (local {: autoload} (require :nfnl.module))
 
@@ -23,7 +23,7 @@
 
 ;; Flash "remote" actions
 (vim.keymap.set ["o"] "r"
-  #((require. :flash :remote)))
+  #(dot (require :flash) (remote)))
 
 (let [wk (require :which-key)
       {: find_files
@@ -43,10 +43,10 @@
       lang {:name "lang"
             "a" [vim.lsp.buf.code_action "Code actions"]
             "d" [#(diagnostics {:bufnr 0}) "Show diagnostics"]
-            "f" [#((require. :conform :format)
-                   {:lsp_fallback true
-                    :stop_after_first true
-                    :async true})
+            "f" [#(dot (require :conform)
+                       (format {:lsp_fallback true
+                                :stop_after_first true
+                                :async true}))
                  "Format buffer"]
             "h" [#(vim.lsp.buf.document_highlight) "Document highlight"]
             "r" [vim.lsp.buf.rename  "Rename symbol"]

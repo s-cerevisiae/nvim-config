@@ -1,4 +1,4 @@
-(import-macros {: require.} :macros)
+(import-macros {: dot} :macros)
 
 [(let [mode-short {1 "mode" :fmt #($:sub 1 1)}
 
@@ -43,12 +43,10 @@
                      [filename indicator]))}}
  {1 "stevearc/dressing.nvim"
   :dependencies ["nvim-telescope/telescope.nvim"]
-  :config
-  #((require. :dressing :setup)
-    {:select
-     {:telescope
-      {:layout_config
-       (require. :telescope.config :values :layout_config)}}})}
+  :opts {:select
+         {:telescope
+          {:layout_config
+           (dot (require :telescope.config) values layout_config)}}}}
  {1 "j-hui/fidget.nvim"
   :opts {:notification {:override_vim_notify true}}}
  "kevinhwang91/nvim-bqf"]

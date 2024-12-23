@@ -44,5 +44,6 @@
        (auto-pair! l r)
        (fast-break! l r)
        (delete-pair! l r)))}
- "eraserhd/parinfer-rust"
+ {1 "s-cerevisiae/parinfer-rust"
+  :build "cargo build --release"}
  "tpope/vim-repeat"]

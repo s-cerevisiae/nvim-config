@@ -29,7 +29,4 @@ local function _4_(props)
   end
   return {filename, indicator}
 end
-local function _6_()
-  return require("dressing").setup({select = {telescope = {layout_config = require("telescope.config").values.layout_config}}})
-end
-return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"stevearc/dressing.nvim", dependencies = {"nvim-telescope/telescope.nvim"}, config = _6_}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}
+return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"stevearc/dressing.nvim", dependencies = {"nvim-telescope/telescope.nvim"}, opts = {select = {telescope = {layout_config = require("telescope.config").values.layout_config}}}}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}

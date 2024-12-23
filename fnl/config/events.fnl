@@ -1,4 +1,3 @@
-(import-macros {: require.} :macros)
 (local {: augroup : autocmd!} (require :utils))
 
 ;; highlight on yank

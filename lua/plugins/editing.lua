@@ -31,4 +31,4 @@ local function _1_()
   end
   return nil
 end
-return {{"folke/flash.nvim", opts = {modes = {search = {enabled = true}, char = {enabled = false}}, prompt = {enabled = true, prefix = {{"r/", "FlashPromptIcon"}}}}}, {"kylechui/nvim-surround", opts = {keymaps = {normal = "s", normal_cur = "ss", normal_line = "S", normal_cur_line = "SS", visual = "s", visual_line = "S"}}}, {"numToStr/Comment.nvim", opts = {ignore = "^$"}}, {"hrsh7th/nvim-insx", config = _1_}, "eraserhd/parinfer-rust", "tpope/vim-repeat"}
+return {{"folke/flash.nvim", opts = {modes = {search = {enabled = true}, char = {enabled = false}}, prompt = {enabled = true, prefix = {{"r/", "FlashPromptIcon"}}}}}, {"kylechui/nvim-surround", opts = {keymaps = {normal = "s", normal_cur = "ss", normal_line = "S", normal_cur_line = "SS", visual = "s", visual_line = "S"}}}, {"numToStr/Comment.nvim", opts = {ignore = "^$"}}, {"hrsh7th/nvim-insx", config = _1_}, {"s-cerevisiae/parinfer-rust", build = "cargo build --release"}, "tpope/vim-repeat"}
