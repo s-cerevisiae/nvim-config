@@ -36,10 +36,10 @@ local function _5_()
   local function _7_()
     return (vim.g["iron#cmd#python"] or {"python"})
   end
-  return require("iron.core").setup({config = {repl_definition = {scheme = {command = _6_}, python = {command = _7_}}, repl_open_cmd = require("iron.view").split("25%")}})
+  return require("iron.core").setup({config = {repl_definition = {scheme = {command = _6_}, python = {command = _7_, format = require("iron.fts.common").bracketed_paste}}, repl_open_cmd = require("iron.view").split("25%")}})
 end
 local function _8_()
-  return require("zk").setup({picker = "telescope"})
+  return require("zk").setup({picker = "fzf_lua"})
 end
 local _9_
 do

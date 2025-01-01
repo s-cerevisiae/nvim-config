@@ -42,11 +42,7 @@
                                        "")]
                      [filename indicator]))}}
  {1 "stevearc/dressing.nvim"
-  :dependencies ["nvim-telescope/telescope.nvim"]
-  :opts {:select
-         {:telescope
-          {:layout_config
-           (dot (require :telescope.config) values layout_config)}}}}
+  :dependencies ["ibhagwan/fzf-lua"]}
  {1 "j-hui/fidget.nvim"
   :opts {:notification {:override_vim_notify true}}}
  "kevinhwang91/nvim-bqf"]

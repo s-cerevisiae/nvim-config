@@ -10,6 +10,20 @@
   #(if (= 0 vim.v.count) "gj" "j")
   {:expr true :silent true})
 
+;; System clipboard shortcuts
+(vim.keymap.set ["n" "v"] "<leader>y"
+  "\"+y"
+  {:remap true})
+(vim.keymap.set ["n" "v"] "<leader>Y"
+  "\"+Y"
+  {:remap true})
+(vim.keymap.set ["n" "v"] "<leader>p"
+  "\"+p"
+  {:remap true})
+(vim.keymap.set ["n" "v"] "<leader>P"
+  "\"+P"
+  {:remap true})
+
 ;; Terminal mode escape
 (vim.keymap.set "t" "<Esc>" "<C-\\><C-n>")
 
@@ -25,13 +39,17 @@
 (vim.keymap.set ["o"] "r"
   #(dot (require :flash) (remote)))
 
+(fn fzf [cmd]
+  (local small (< vim.o.lines 30))
+  ((-> (require :fzf-lua) (. cmd))
+   {:fzf_colors true
+    :winopts {:fullscreen small
+              :preview {:wrap "wrap"
+                        :hidden (if small "hidden" "nohidden")}}}))
+
 (let [wk (require :which-key)
-      {: find_files
-       : diagnostics
-       : commands} (require :telescope.builtin)
       file {:name "file"
-            "f" [find_files "Find file"]
-            "h" [#(find_files {:hidden true}) "Find hidden file"]
+            "f" [#(fzf :files) "Find file"]
             "t" ["<cmd>Neotree toggle reveal=true position=current<cr>" "Toggle NeoTree"]
             "b" ["<cmd>Oil<cr>" "Oil.nvim file browser"]}
       goto {:name "goto"
@@ -41,8 +59,8 @@
             "t" [vim.lsp.buf.type_definition "Go to type definition"]
             "r" [vim.lsp.buf.references "Go to references"]}
       lang {:name "lang"
-            "a" [vim.lsp.buf.code_action "Code actions"]
-            "d" [#(diagnostics {:bufnr 0}) "Show diagnostics"]
+            "a" [#(fzf :lsp_code_actions) "Code actions"]
+            "d" [#(fzf :diagnostics_workspace) "Show diagnostics"]
             "f" [#(dot (require :conform)
                        (format {:lsp_fallback true
                                 :stop_after_first true
@@ -76,8 +94,8 @@
                         {:virtual_text (not virtual_text)
                          :virtual_lines (not virtual_lines)}))]
   (wk.register
-   {"<leader>" [commands "Find command"]
-    "b" ["<cmd>Telescope buffers<cr>" "buffers"]
+   {"<leader>" [#(fzf :commands) "Find command"]
+    "b" [#(fzf :buffers) "buffers"]
     "d" [toggle-diags "Toggle linewise diagnostics"]
     "f" file
     "l" lang

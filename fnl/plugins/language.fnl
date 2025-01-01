@@ -55,12 +55,13 @@
     {:config
      {:repl_definition
       {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
-       :python {:command #(or vim.g.iron#cmd#python ["python"])}}
+       :python {:command #(or vim.g.iron#cmd#python ["python"])
+                :format (dot (require :iron.fts.common) bracketed_paste)}}
       :repl_open_cmd (dot (require :iron.view) (split "25%"))}})}
  {1 "mickael-menu/zk-nvim"
   :config
   #(dot (require :zk)
-        (setup {:picker "telescope"}))}
+        (setup {:picker "fzf_lua"}))}
 
  ;; Formatter
  {1 "stevearc/conform.nvim"
