@@ -42,6 +42,7 @@
   #(do
      (dot (require :lsp_lines) (setup))
      (vim.diagnostic.config {:virtual_lines false}))}
+ "mfussenegger/nvim-jdtls"
 
  ;; Language plugins
  "wlangstroth/vim-racket"

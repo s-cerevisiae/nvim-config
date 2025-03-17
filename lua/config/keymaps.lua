@@ -17,10 +17,10 @@ local function _4_()
   end
 end
 vim.keymap.set("n", "j", _4_, {expr = true, silent = true})
-vim.keymap.set({"n", "v"}, "<leader>y", "\"+y", {remap = true})
-vim.keymap.set({"n", "v"}, "<leader>Y", "\"+Y", {remap = true})
-vim.keymap.set({"n", "v"}, "<leader>p", "\"+p", {remap = true})
-vim.keymap.set({"n", "v"}, "<leader>P", "\"+P", {remap = true})
+vim.keymap.set({"n", "v"}, "<leader>y", "\"+y", {remap = true, desc = "y to clip"})
+vim.keymap.set({"n", "v"}, "<leader>Y", "\"+Y", {remap = true, desc = "Y to clip"})
+vim.keymap.set({"n", "v"}, "<leader>p", "\"+p", {remap = true, desc = "p from clip"})
+vim.keymap.set({"n", "v"}, "<leader>P", "\"+P", {remap = true, desc = "P from clip"})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 local function _6_()
   return vim.snippet.jump(1)
@@ -35,76 +35,75 @@ local function _8_()
 end
 vim.keymap.set({"o"}, "r", _8_)
 local function fzf(cmd)
-  local small = (vim.o.lines < 30)
-  local _9_
-  if small then
-    _9_ = "hidden"
-  else
-    _9_ = "nohidden"
-  end
-  return require("fzf-lua")[cmd]({fzf_colors = true, winopts = {fullscreen = small, preview = {wrap = "wrap", hidden = _9_}}})
+  return require("fzf-lua")[cmd]()
 end
 local wk = require("which-key")
 local file
-local function _11_()
+local function _9_()
   return fzf("files")
 end
-file = {name = "file", f = {_11_, "Find file"}, t = {"<cmd>Neotree toggle reveal=true position=current<cr>", "Toggle NeoTree"}, b = {"<cmd>Oil<cr>", "Oil.nvim file browser"}}
-local _goto = {name = "goto", i = {vim.lsp.buf.implementation, "Go to implementation"}, d = {vim.lsp.buf.definition, "Go to definition"}, D = {vim.lsp.buf.declaration, "Go to declaration"}, t = {vim.lsp.buf.type_definition, "Go to type definition"}, r = {vim.lsp.buf.references, "Go to references"}}
+file = {{"<leader>f", group = "file"}, {"<leader>ff", _9_, desc = "File Finder"}, {"<leader>fb", "<cmd>Oil<cr>", desc = "File Browser"}, {"<leader>ft", "<cmd>Neotree toggle reveal=true position=current<cr>", desc = "File Tree"}}
 local lang
-local function _12_()
+local function _10_()
   return fzf("lsp_code_actions")
 end
-local function _13_()
+local function _11_()
+  return fzf("diagnostics_document")
+end
+local function _12_()
   return fzf("diagnostics_workspace")
 end
-local function _14_()
+local function _13_()
   return require("conform").format({lsp_fallback = true, stop_after_first = true, async = true})
 end
-local function _15_()
+local function _14_()
   return vim.lsp.buf.document_highlight()
 end
-local function _16_()
+local function _15_()
   return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
-lang = {name = "lang", a = {_12_, "Code actions"}, d = {_13_, "Show diagnostics"}, f = {_14_, "Format buffer"}, h = {_15_, "Document highlight"}, r = {vim.lsp.buf.rename, "Rename symbol"}, i = {_16_, "Toggle inlay hint"}, g = _goto}
-local term = {name = "term", l = {"<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 terminal"}, j = {"<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 terminal"}, t = {"<cmd>ToggleTerm direction=float<cr>", "Toggle floating terminal"}, s = {"<cmd>TermSelect<cr>", "Select term"}}
+lang = {{"<leader>l", group = "lang"}, {"<leader>la", _10_, desc = "Code actions", mode = {"n", "v"}}, {"<leader>ld", _11_, desc = "Current file diagnostics"}, {"<leader>lD", _12_, desc = "Workspace diagnostics"}, {"<leader>lf", _13_, desc = "Format buffer", mode = {"n", "v"}}, {"<leader>lh", _14_, desc = "Document highlight"}, {"<leader>lr", vim.lsp.buf.rename, desc = "Rename symbol"}, {"<leader>li", _15_, desc = "Toggle inlay hint"}}
+local _goto = {{"<leader>lg", group = "goto"}, {"<leader>lgi", vim.lsp.buf.implementation, desc = "Go to implementation"}, {"<leader>lgd", vim.lsp.buf.definition, desc = "Go to definition"}, {"<leader>lgD", vim.lsp.buf.declaration, desc = "Go to declaration"}, {"<leader>lgt", vim.lsp.buf.type_definition, desc = "Go to type definition"}, {"<leader>lgr", vim.lsp.buf.references, desc = "Go to references"}}
+local term = {{"<leader>t", desc = "term"}, {"<leader>tl", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Toggle \226\134\146 terminal"}, {"<leader>tj", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Toggle \226\134\147 terminal"}, {"<leader>tt", "<cmd>ToggleTerm direction=float<cr>", desc = "Toggle floating terminal"}, {"<leader>ts", "<cmd>TermSelect<cr>", desc = "Select term"}}
 local repl
 do
   local iron = autoload("iron.core")
   local toggle_repl = "<cmd>IronRepl<cr>"
   local send_visual
-  local function _17_()
+  local function _16_()
     iron.mark_visual()
     return iron.send_mark()
   end
-  send_visual = _17_
-  local function _18_()
+  send_visual = _16_
+  local function _17_()
     return iron.run_motion("send_motion")
   end
-  local function _19_()
+  local function _18_()
     return iron.send_line()
   end
-  local function _20_()
+  local function _19_()
     return iron.send_file()
   end
-  local function _21_()
+  local function _20_()
     return iron.send_mark()
   end
-  repl = {name = "repl", r = {toggle_repl, "Toggle REPL"}, v = {send_visual, "Send visual selection"}, s = {_18_, "Send motion"}, l = {_19_, "Send current line"}, f = {_20_, "Send the whole file"}, m = {_21_, "Send marked"}}
+  repl = {{"<leader>r", desc = "repl"}, {"<leader>rr", send_visual, desc = "Send visual selection", mode = "v"}, {"<leader>rr", _17_, desc = "Send motion", mode = "n"}, {"<leader>rt", toggle_repl, desc = "Toggle REPL"}, {"<leader>rl", _18_, desc = "Send current line"}, {"<leader>rf", _19_, desc = "Send the whole file"}, {"<leader>rm", _20_, desc = "Send marked"}}
 end
 local toggle_diags
-local function _22_()
-  local _let_23_ = vim.diagnostic.config()
-  local virtual_text = _let_23_["virtual_text"]
-  local virtual_lines = _let_23_["virtual_lines"]
+local function _21_()
+  local _let_22_ = vim.diagnostic.config()
+  local virtual_text = _let_22_["virtual_text"]
+  local virtual_lines = _let_22_["virtual_lines"]
   return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
 end
-toggle_diags = _22_
-local function _24_()
+toggle_diags = _21_
+local function _23_()
   return fzf("commands")
 end
-local function _25_()
+local function _24_()
   return fzf("buffers")
 end
-return wk.register({["<leader>"] = {_24_, "Find command"}, b = {_25_, "buffers"}, d = {toggle_diags, "Toggle linewise diagnostics"}, f = file, l = lang, g = {"<cmd>Neogit<cr>", "Neogit"}, t = term, r = repl, w = {"<c-w>", "Window commands", noremap = false}}, {mode = {"n", "v"}, prefix = "<leader>"})
+local function _25_()
+  return wk.show({keys = "<c-w>", loop = true})
+end
+return wk.add({{file, lang, _goto, term, repl}, {"<leader><leader>", _23_, desc = "Command Palette"}, {"<leader>b", _24_, desc = "buffers"}, {"<leader>d", toggle_diags, desc = "Draw Diagnostics"}, {"<leader>g", "<cmd>Neogit<cr>", desc = "Neogit"}, {"<leader>w", _25_, desc = "window"}})

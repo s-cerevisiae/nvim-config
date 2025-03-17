@@ -14,4 +14,8 @@
     (transform x form)
     (dot (transform x form) (unpack rest))))
 
-{: dot}
+(fn | [& args]
+  (let [len (length args)]
+    (table.move args 1 (- len 1) 1 (. args len))))
+
+{: dot : |}
