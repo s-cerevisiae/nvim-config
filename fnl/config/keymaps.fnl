@@ -97,4 +97,5 @@
     (| "<leader>b" #(fzf :buffers) {:desc "buffers"})
     (| "<leader>d" toggle-diags {:desc "Draw Diagnostics"})
     (| "<leader>g" "<cmd>Neogit<cr>" {:desc "Neogit"})
-    (| "<leader>w" #(wk.show {:keys "<c-w>" :loop true}) {:desc "window"})]))
+    (| "<leader>w" "<c-w>" {:desc "window" :remap true})
+    (| "<leader>W" #(wk.show {:keys "<c-w>" :loop true}) {:desc "window persist"})]))

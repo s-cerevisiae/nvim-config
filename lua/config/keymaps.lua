@@ -106,4 +106,4 @@ end
 local function _25_()
   return wk.show({keys = "<c-w>", loop = true})
 end
-return wk.add({{file, lang, _goto, term, repl}, {"<leader><leader>", _23_, desc = "Command Palette"}, {"<leader>b", _24_, desc = "buffers"}, {"<leader>d", toggle_diags, desc = "Draw Diagnostics"}, {"<leader>g", "<cmd>Neogit<cr>", desc = "Neogit"}, {"<leader>w", _25_, desc = "window"}})
+return wk.add({{file, lang, _goto, term, repl}, {"<leader><leader>", _23_, desc = "Command Palette"}, {"<leader>b", _24_, desc = "buffers"}, {"<leader>d", toggle_diags, desc = "Draw Diagnostics"}, {"<leader>g", "<cmd>Neogit<cr>", desc = "Neogit"}, {"<leader>w", "<c-w>", desc = "window", remap = true}, {"<leader>W", _25_, desc = "window persist"}})
