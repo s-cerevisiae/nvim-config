@@ -10,6 +10,8 @@
                    :normal_cur_line "SS"
                    :visual "s"
                    :visual_line "S"}}}
+ {1 "jake-stewart/multicursor.nvim"
+  :config true}
  {1 "numToStr/Comment.nvim"
   :opts {:ignore "^$"}}
  {1 "hrsh7th/nvim-insx"

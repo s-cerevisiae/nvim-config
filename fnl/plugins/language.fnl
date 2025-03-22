@@ -7,6 +7,7 @@
 
 [;; Langservers
  {1 "neovim/nvim-lspconfig"
+  :event ["BufReadPost" "BufNewFile"]
   :config
   #(let [lspconfig (require :lspconfig)
          capabilities (get-cap)]
@@ -30,6 +31,7 @@
      (each [_ srv (ipairs ["clangd" "ocamllsp" "hls" "pyright" "nil_ls" "rescriptls"])]
        (setup-lsp srv {: capabilities})))}
  {1 "pmizio/typescript-tools.nvim"
+  :event ["BufReadPost" "BufNewFile"]
   :dependencies ["nvim-lua/plenary.nvim"
                  "neovim/nvim-lspconfig"]
   :opts #{:capabilities (get-cap)

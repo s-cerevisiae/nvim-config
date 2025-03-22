@@ -29,4 +29,4 @@ local function _4_(props)
   end
   return {filename, indicator}
 end
-return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"stevearc/dressing.nvim", dependencies = {"ibhagwan/fzf-lua"}}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}
+return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = {top = 0, bottom = 0}, horizontal = {left = 0, right = 0}}, padding = {left = 1, right = 1}}, render = _4_}}, {"folke/which-key.nvim", event = "VeryLazy", version = "3", opts = {delay = 200}}, {"stevearc/dressing.nvim", dependencies = {"ibhagwan/fzf-lua"}}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}

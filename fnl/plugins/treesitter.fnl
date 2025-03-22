@@ -1,6 +1,7 @@
 (import-macros {: dot} :macros)
 
 [{1 "nvim-treesitter/nvim-treesitter"
+  :event ["BufReadPost" "BufNewFile"]
   :dependencies ["nvim-treesitter/nvim-treesitter-textobjects"]
   :build ":TSUpdate"
   :config

@@ -1,4 +1,4 @@
-(import-macros {: dot : |} :macros)
+(import-macros {: dot} :macros)
 
 (local {: autoload} (require :nfnl.module))
 
@@ -45,57 +45,82 @@
 
 (fn fzf [cmd] ((-> (require :fzf-lua) (. cmd))))
 
-(let [wk (require :which-key)
-      file [(| "<leader>f" {:group "file"})
-            (| "<leader>ff" #(fzf :files) {:desc "File Finder"})
-            (| "<leader>fb" "<cmd>Oil<cr>" {:desc "File Browser"})
-            (| "<leader>ft" "<cmd>Neotree toggle reveal=true position=current<cr>" {:desc "File Tree"})]
-      lang [(| "<leader>l" {:group "lang"})
-            (| "<leader>la" #(fzf :lsp_code_actions) {:desc "Code actions" :mode ["n" "v"]})
-            (| "<leader>ld" #(fzf :diagnostics_document) {:desc "Current file diagnostics"})
-            (| "<leader>lD" #(fzf :diagnostics_workspace) {:desc "Workspace diagnostics"})
-            (| "<leader>lf" #(dot (require :conform)
-                                  (format {:lsp_fallback true
-                                           :stop_after_first true
-                                           :async true}))
-                            {:desc "Format buffer" :mode ["n" "v"]})
-            (| "<leader>lh" #(vim.lsp.buf.document_highlight) {:desc "Document highlight"})
-            (| "<leader>lr" vim.lsp.buf.rename {:desc "Rename symbol"})
-            (| "<leader>li" #(vim.lsp.inlay_hint.enable
-                               (not (vim.lsp.inlay_hint.is_enabled)))
-                            {:desc "Toggle inlay hint"})]
-      goto [(| "<leader>lg" {:group "goto"})
-            (| "<leader>lgi" vim.lsp.buf.implementation {:desc "Go to implementation"})
-            (| "<leader>lgd" vim.lsp.buf.definition {:desc "Go to definition"})
-            (| "<leader>lgD" vim.lsp.buf.declaration {:desc "Go to declaration"})
-            (| "<leader>lgt" vim.lsp.buf.type_definition {:desc "Go to type definition"})
-            (| "<leader>lgr" vim.lsp.buf.references {:desc "Go to references"})]
-      term [(| "<leader>t" {:desc "term"})
-            (| "<leader>tl" "<cmd>ToggleTerm direction=vertical<cr>" {:desc "Toggle → terminal"})
-            (| "<leader>tj" "<cmd>ToggleTerm direction=horizontal<cr>" {:desc "Toggle ↓ terminal"})
-            (| "<leader>tt" "<cmd>ToggleTerm direction=float<cr>" {:desc "Toggle floating terminal"})
-            (| "<leader>ts" "<cmd>TermSelect<cr>" {:desc "Select term"})]
-      repl (let [iron (autoload :iron.core)
-                 toggle-repl "<cmd>IronRepl<cr>"
-                 send-visual #(do (iron.mark_visual)
-                                  (iron.send_mark))]
-             [(| "<leader>r" {:desc "repl"})
-              (| "<leader>rr" send-visual {:desc "Send visual selection" :mode "v"})
-              (| "<leader>rr" #(iron.run_motion "send_motion") {:desc "Send motion" :mode "n"})
-              (| "<leader>rt" toggle-repl {:desc "Toggle REPL"})
-              (| "<leader>rl" #(iron.send_line) {:desc "Send current line"})
-              (| "<leader>rf" #(iron.send_file) {:desc "Send the whole file"})
-              (| "<leader>rm" #(iron.send_mark) {:desc "Send marked"})])
-      toggle-diags #(let [{: virtual_text
+(fn map [key val desc opts]
+  (let [opts (or opts {})
+        mode (or opts.mode "n")]
+    (set opts.mode nil)
+    (set opts.desc desc)
+    (vim.keymap.set mode key val opts)))
+    ; (print (vim.inspect {: key : val : mode : opts}))))
+
+(fn map-group [prefix desc & group]
+  (map prefix "" desc)
+  (each [_ m (ipairs group)]
+    (set (. m 1) (.. prefix (. m 1)))
+    (map (unpack m))))
+
+(map-group "<leader>f" "file"
+  ["f" #(fzf :files) "File Finder"]
+  ["b" "<cmd>Oil<cr>" "File Browser"]
+  ["t" "<cmd>Neotree toggle reveal=true position=current<cr>" "File Tree"])
+
+(map-group "<leader>l" "lang"
+  ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
+  ["d" #(fzf :diagnostics_document) "Local Diagnostics"]
+  ["D" #(fzf :diagnostics_workspace) "Workspace Diagnostics"]
+  ["f" #(dot (require :conform)
+             (format {:lsp_fallback true
+                      :stop_after_first true
+                      :async true}))
+       "Format buffer"
+       {:mode ["n" "v"]}]
+  ["h" vim.lsp.buf.document_highlight "Document Highlight"]
+  ["r" vim.lsp.buf.rename "Rename Symbol"]
+  ["i" #(vim.lsp.inlay_hint.enable
+          (not (vim.lsp.inlay_hint.is_enabled)))
+       "Toggle inlay hint"])
+
+(map-group "<leader>lg" "goto"
+  ["i" vim.lsp.buf.implementation "Go to Implementation"]
+  ["d" vim.lsp.buf.definition "Go to Definition"]
+  ["D" vim.lsp.buf.declaration "Go to Declaration"]
+  ["t" vim.lsp.buf.type_definition "Go to Type Definition"]
+  ["r" vim.lsp.buf.references "Go to References"])
+
+(map-group "<leader>t" "term"
+  ["t" "<cmd>ToggleTerm direction=float<cr>" "Toggle Floating Terminal"]
+  ["l" "<cmd>ToggleTerm direction=vertical<cr>" "Toggle → Terminal"]
+  ["j" "<cmd>ToggleTerm direction=horizontal<cr>" "Toggle ↓ Terminal"]
+  ["s" "<cmd>TermSelect<cr>" "Select Terminal"])
+
+(let [iron (autoload :iron.core)
+      send-visual #(do (iron.mark_visual)
+                       (iron.send_mark))]
+  (map-group "<leader>r" "repl"
+    ["r" send-visual "Send visual selection" {:mode "v"}]
+    ["r" #(iron.run_motion "send_motion") "Send motion" {:mode "n"}]
+    ["t" "<cmd>IronRepl<cr>" "Toggle REPL"]
+    ["l" #(iron.send_line) "Send current line"]
+    ["f" #(iron.send_file) "Send the whole file"]
+    ["m" #(iron.send_mark) "Send marked"]))
+
+(map "<leader><leader>" #(fzf :commands) "Command Palette")
+(map "<leader>b" #(fzf :buffers) "Buffers")
+(let [toggle-diags #(let [{: virtual_text
                            : virtual_lines} (vim.diagnostic.config)]
                       (vim.diagnostic.config
                         {:virtual_text (not virtual_text)
                          :virtual_lines (not virtual_lines)}))]
-  (wk.add
-   [[file lang goto term repl]
-    (| "<leader><leader>" #(fzf :commands) {:desc "Command Palette"})
-    (| "<leader>b" #(fzf :buffers) {:desc "buffers"})
-    (| "<leader>d" toggle-diags {:desc "Draw Diagnostics"})
-    (| "<leader>g" "<cmd>Neogit<cr>" {:desc "Neogit"})
-    (| "<leader>w" "<c-w>" {:desc "window" :remap true})
-    (| "<leader>W" #(wk.show {:keys "<c-w>" :loop true}) {:desc "window persist"})]))
+  (map "<leader>d" toggle-diags "Draw Diagnostics"))
+(map "<leader>g" "<cmd>Neogit<cr>" "Neogit")
+(map "<leader>w" "<c-w>" "window" {:remap true})
+(map "<leader>W" #(dot (require :which-key) (show {:keys "<c-w>" :loop true})) "window persist")
+
+(let [mc (require :multicursor-nvim)]
+  (map "<leader>c" mc.toggleCursor "Multiple Cursors")
+  (map "<leader>c/" mc.matchCursors "Match Cursors" {:mode "v"})
+  (mc.addKeymapLayer
+   (fn [layer]
+     (layer "n" "<esc>" #(if (not (mc.cursorsEnabled))
+                             (mc.enableCursors)
+                             (mc.clearCursors))))))

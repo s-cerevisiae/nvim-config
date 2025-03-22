@@ -71,4 +71,4 @@ do
   end
   _9_ = {formatters_by_ft = vim.tbl_extend("keep", _10_, _12_, {python = {"ruff_format"}})}
 end
-return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _3_}, "mrcjkb/rustaceanvim", {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = _4_}, "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", config = _5_}, {"mickael-menu/zk-nvim", config = _8_}, {"stevearc/conform.nvim", opts = _9_}}
+return {{"neovim/nvim-lspconfig", event = {"BufReadPost", "BufNewFile"}, config = _1_}, {"pmizio/typescript-tools.nvim", event = {"BufReadPost", "BufNewFile"}, dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _3_}, "mrcjkb/rustaceanvim", {"https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = _4_}, "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", config = _5_}, {"mickael-menu/zk-nvim", config = _8_}, {"stevearc/conform.nvim", opts = _9_}}

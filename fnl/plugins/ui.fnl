@@ -41,6 +41,11 @@
                                        (. vim.bo props.buf :readonly) " 󰌾"
                                        "")]
                      [filename indicator]))}}
+
+ {1 "folke/which-key.nvim"
+  :event "VeryLazy"
+  :version "3"
+  :opts {:delay 200}}
  {1 "stevearc/dressing.nvim"
   :dependencies ["ibhagwan/fzf-lua"]}
  {1 "j-hui/fidget.nvim"

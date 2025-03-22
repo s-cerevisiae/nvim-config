@@ -14,6 +14,8 @@
     (transform x form)
     (dot (transform x form) (unpack rest))))
 
+;; produce a mixed table by inserting positional args
+;; into the last table
 (fn | [& args]
   (let [len (length args)]
     (table.move args 1 (- len 1) 1 (. args len))))
