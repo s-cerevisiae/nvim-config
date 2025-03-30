@@ -1,10 +1,31 @@
 -- [nfnl] Compiled from fnl/config/diagnostics.fnl by https://github.com/Olical/nfnl, do not edit.
-local signs = {"Error", "Warn", "Info", "Hint"}
-vim.diagnostic.config({severity_sort = true})
-for _, name in ipairs(signs) do
-  local hl = vim.api.nvim_get_hl(0, {name = ("DiagnosticVirtualText" .. name), link = false})
-  local hl_name = ("DiagnosticLine" .. name)
-  vim.api.nvim_set_hl(0, hl_name, {bg = hl.bg})
-  vim.fn.sign_define(("DiagnosticSign" .. name), {linehl = hl_name})
+local function gen_sign(f)
+  local sign_names = {"Error", "Warn", "Info", "Hint"}
+  local tbl_16_auto = {}
+  for _, name in ipairs(sign_names) do
+    local k_17_auto, v_18_auto = vim.diagnostic.severity[string.upper(name)], f(name)
+    if ((k_17_auto ~= nil) and (v_18_auto ~= nil)) then
+      tbl_16_auto[k_17_auto] = v_18_auto
+    else
+    end
+  end
+  return tbl_16_auto
 end
-return nil
+local function define_linehl(severity)
+  local _let_2_ = vim.api.nvim_get_hl(0, {name = ("DiagnosticVirtualText" .. severity), link = false})
+  local bg = _let_2_["bg"]
+  local hl_name = ("DiagnosticLine" .. severity)
+  vim.api.nvim_set_hl(0, hl_name, {bg = bg})
+  return hl_name
+end
+local signs
+do
+  local linehl = gen_sign(define_linehl)
+  local cancel
+  local function _3_()
+    return ""
+  end
+  cancel = gen_sign(_3_)
+  signs = {text = cancel, numhl = cancel, linehl = linehl}
+end
+return vim.diagnostic.config({severity_sort = true, virtual_text = true, signs = signs})

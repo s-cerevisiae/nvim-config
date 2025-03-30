@@ -39,11 +39,6 @@
           :single_file_support false
           :settings {:tsserver_max_memory 4096}}}
  "mrcjkb/rustaceanvim"
- {1 "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
-  :config
-  #(do
-     (dot (require :lsp_lines) (setup))
-     (vim.diagnostic.config {:virtual_lines false}))}
  "mfussenegger/nvim-jdtls"
 
  ;; Language plugins

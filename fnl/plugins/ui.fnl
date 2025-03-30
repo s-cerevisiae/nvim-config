@@ -8,6 +8,8 @@
        line-short {:lualine_a [mode-short]
                    :lualine_b [tabs]
                    :lualine_c [:diagnostics]
+                   :lualine_x [:filetype]
+                   :lualine_y [:progress]
                    :lualine_z [:location]}
 
        line-full {:lualine_a [:mode]

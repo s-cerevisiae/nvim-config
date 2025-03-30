@@ -43,7 +43,7 @@
 (vim.keymap.set ["o"] "r"
   #(dot (require :flash) (remote)))
 
-(fn fzf [cmd] ((-> (require :fzf-lua) (. cmd))))
+(fn fzf [cmd opts] ((-> (require :fzf-lua) (. cmd)) opts))
 
 (fn map [key val desc opts]
   (let [opts (or opts {})
@@ -51,7 +51,6 @@
     (set opts.mode nil)
     (set opts.desc desc)
     (vim.keymap.set mode key val opts)))
-    ; (print (vim.inspect {: key : val : mode : opts}))))
 
 (fn map-group [prefix desc & group]
   (map prefix "" desc)
@@ -66,8 +65,8 @@
 
 (map-group "<leader>l" "lang"
   ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
-  ["d" #(fzf :diagnostics_document) "Local Diagnostics"]
-  ["D" #(fzf :diagnostics_workspace) "Workspace Diagnostics"]
+  ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
+  ["D" #(fzf :diagnostics_workspace {:sort true}) "Workspace Diagnostics"]
   ["f" #(dot (require :conform)
              (format {:lsp_fallback true
                       :stop_after_first true
@@ -104,21 +103,22 @@
     ["f" #(iron.send_file) "Send the whole file"]
     ["m" #(iron.send_mark) "Send marked"]))
 
-(map "<leader><leader>" #(fzf :commands) "Command Palette")
-(map "<leader>b" #(fzf :buffers) "Buffers")
 (let [toggle-diags #(let [{: virtual_text
                            : virtual_lines} (vim.diagnostic.config)]
                       (vim.diagnostic.config
                         {:virtual_text (not virtual_text)
-                         :virtual_lines (not virtual_lines)}))]
-  (map "<leader>d" toggle-diags "Draw Diagnostics"))
-(map "<leader>g" "<cmd>Neogit<cr>" "Neogit")
-(map "<leader>w" "<c-w>" "window" {:remap true})
-(map "<leader>W" #(dot (require :which-key) (show {:keys "<c-w>" :loop true})) "window persist")
+                         :virtual_lines (not virtual_lines)}))
+      mc (require :multicursor-nvim)]
+  (map-group "<leader>" "leader"
+    ["<leader>" #(fzf :commands) "Command Palette"]
+    ["b" #(fzf :buffers) "Buffers"]
+    ["d" toggle-diags "Toggle Diagnostics Style"]
+    ["g" "<cmd>Neogit<cr>" "Neogit"]
+    ["w" "<c-w>" "window" {:remap true}]
+    ["W" #(dot (require :which-key) (show {:keys "<c-w>" :loop true})) "window persist"]
+    ["c" mc.toggleCursor "Multiple Cursors"]
+    ["c/" mc.matchCursors "Match Cursors" {:mode "v"}])
 
-(let [mc (require :multicursor-nvim)]
-  (map "<leader>c" mc.toggleCursor "Multiple Cursors")
-  (map "<leader>c/" mc.matchCursors "Match Cursors" {:mode "v"})
   (mc.addKeymapLayer
    (fn [layer]
      (layer "n" "<esc>" #(if (not (mc.cursorsEnabled))

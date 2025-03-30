@@ -34,8 +34,8 @@ local function _8_()
   return require("flash").remote()
 end
 vim.keymap.set({"o"}, "r", _8_)
-local function fzf(cmd)
-  return require("fzf-lua")[cmd]()
+local function fzf(cmd, opts)
+  return require("fzf-lua")[cmd](opts)
 end
 local function map(key, val, desc, opts)
   local opts0 = (opts or {})
@@ -61,10 +61,10 @@ local function _10_()
   return fzf("lsp_code_actions")
 end
 local function _11_()
-  return fzf("diagnostics_document")
+  return fzf("diagnostics_document", {sort = true})
 end
 local function _12_()
-  return fzf("diagnostics_workspace")
+  return fzf("diagnostics_workspace", {sort = true})
 end
 local function _13_()
   return require("conform").format({lsp_fallback = true, stop_after_first = true, async = true})
@@ -97,34 +97,25 @@ do
   end
   map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _16_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _17_, "Send current line"}, {"f", _18_, "Send the whole file"}, {"m", _19_, "Send marked"})
 end
+local toggle_diags
 local function _20_()
+  local _let_21_ = vim.diagnostic.config()
+  local virtual_text = _let_21_["virtual_text"]
+  local virtual_lines = _let_21_["virtual_lines"]
+  return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
+end
+toggle_diags = _20_
+local mc = require("multicursor-nvim")
+local function _22_()
   return fzf("commands")
 end
-map("<leader><leader>", _20_, "Command Palette")
-local function _21_()
+local function _23_()
   return fzf("buffers")
 end
-map("<leader>b", _21_, "Buffers")
-do
-  local toggle_diags
-  local function _22_()
-    local _let_23_ = vim.diagnostic.config()
-    local virtual_text = _let_23_["virtual_text"]
-    local virtual_lines = _let_23_["virtual_lines"]
-    return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
-  end
-  toggle_diags = _22_
-  map("<leader>d", toggle_diags, "Draw Diagnostics")
-end
-map("<leader>g", "<cmd>Neogit<cr>", "Neogit")
-map("<leader>w", "<c-w>", "window", {remap = true})
 local function _24_()
   return require("which-key").show({keys = "<c-w>", loop = true})
 end
-map("<leader>W", _24_, "window persist")
-local mc = require("multicursor-nvim")
-map("<leader>c", mc.toggleCursor, "Multiple Cursors")
-map("<leader>c/", mc.matchCursors, "Match Cursors", {mode = "v"})
+map_group("<leader>", "leader", {"<leader>", _22_, "Command Palette"}, {"b", _23_, "Buffers"}, {"d", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _24_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
 local function _25_(layer)
   local function _26_()
     if not mc.cursorsEnabled() then

@@ -5,9 +5,7 @@
   {:keymap {:preset "enter"
             "<Tab>" ["select_next" "fallback"]
             "<S-Tab>" ["select_prev" "fallback"]}
-   :cmdline {:keymap {"<Tab>" ["show_and_insert" "select_next"]
-                      "<S-Tab>" ["show_and_insert" "select_prev"]
-                      "<Up>" ["select_prev" "fallback"]
-                      "<Down>" ["select_next" "fallback"]
-                      "<CR>" ["accept" "fallback"]}}
+   :cmdline {:keymap {:preset "inherit"
+                      "<Tab>" ["show_and_insert" "select_next"]
+                      "<S-Tab>" ["show_and_insert" "select_prev"]}}
    :completion {:list {:selection {:preselect false}}}}}]
