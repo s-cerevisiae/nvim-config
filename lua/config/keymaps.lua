@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/config/keymaps.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/config/keymaps.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local function _2_()
@@ -97,33 +97,58 @@ do
   end
   map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _16_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _17_, "Send current line"}, {"f", _18_, "Send the whole file"}, {"m", _19_, "Send marked"})
 end
+do
+  local dap = autoload("dap")
+  local function _20_()
+    return dap.continue()
+  end
+  local function _21_()
+    return dap.toggle_breakpoint()
+  end
+  local function _22_()
+    return dap.step_over()
+  end
+  local function _23_()
+    return dap.step_into()
+  end
+  local function _24_()
+    return dap.step_out()
+  end
+  local function _25_()
+    return dap.step_back()
+  end
+  local function _26_()
+    return dap.terminate()
+  end
+  map_group("<leader>d", "debugging", {"d", _20_, "Run / Continue"}, {"b", _21_, "Toggle Breakpoint"}, {"j", _22_, "Step Over"}, {"h", _23_, "Step Into"}, {"l", _24_, "Step Out"}, {"k", _25_, "Step Back"}, {"q", _26_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
+end
 local toggle_diags
-local function _20_()
-  local _let_21_ = vim.diagnostic.config()
-  local virtual_text = _let_21_["virtual_text"]
-  local virtual_lines = _let_21_["virtual_lines"]
+local function _27_()
+  local _let_28_ = vim.diagnostic.config()
+  local virtual_text = _let_28_["virtual_text"]
+  local virtual_lines = _let_28_["virtual_lines"]
   return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
 end
-toggle_diags = _20_
+toggle_diags = _27_
 local mc = require("multicursor-nvim")
-local function _22_()
+local function _29_()
   return fzf("commands")
 end
-local function _23_()
+local function _30_()
   return fzf("buffers")
 end
-local function _24_()
+local function _31_()
   return require("which-key").show({keys = "<c-w>", loop = true})
 end
-map_group("<leader>", "leader", {"<leader>", _22_, "Command Palette"}, {"b", _23_, "Buffers"}, {"d", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _24_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
-local function _25_(layer)
-  local function _26_()
+map_group("<leader>", "leader", {"<leader>", _29_, "Command Palette"}, {"b", _30_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _31_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
+local function _32_(layer)
+  local function _33_()
     if not mc.cursorsEnabled() then
       return mc.enableCursors()
     else
       return mc.clearCursors()
     end
   end
-  return layer("n", "<esc>", _26_)
+  return layer("n", "<esc>", _33_)
 end
-return mc.addKeymapLayer(_25_)
+return mc.addKeymapLayer(_32_)

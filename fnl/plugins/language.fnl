@@ -7,29 +7,27 @@
 
 [;; Langservers
  {1 "neovim/nvim-lspconfig"
-  :event ["BufReadPost" "BufNewFile"]
   :config
-  #(let [lspconfig (require :lspconfig)
-         capabilities (get-cap)]
-     (fn setup-lsp [name tbl]
-       ((. lspconfig name :setup) tbl))
-     (setup-lsp "racket_langserver"
-      {: capabilities
-       :filetypes ["racket"]})
-     (setup-lsp "denols"
-      {: capabilities
-       :root_dir (lspconfig.util.root_pattern "deno.json" "deno.jsonc")
-       :single_file_support false})
-     (setup-lsp "ruff"
-      {:on_attach (fn [client bufnr]
-                    (set client.server_capabilities.hoverProvider false))})
-     (setup-lsp "pyright"
-      {:settings {:python {:analysis {:ignore "*"}}}})
-     (setup-lsp "tinymist"
-      {: capabilities
-       :single_file_support true})
-     (each [_ srv (ipairs ["clangd" "ocamllsp" "hls" "pyright" "nil_ls" "rescriptls"])]
-       (setup-lsp srv {: capabilities})))}
+  #(do (vim.lsp.config "racket_langserver"
+         {:filetypes ["racket"]})
+       (vim.lsp.config "denols"
+         {:root_markers ["deno.json" "deno.jsonc"]})
+       (vim.lsp.config "pyright"
+         {:settings {:python {:analysis {:ignore "*"}}}})
+       (vim.lsp.enable
+         ["racket_langserver"
+          ;; use workspace_required in the future
+          "denols"
+          ;; ruff is no longer a hover provider
+          "ruff"
+          "pyright"
+          ;; single file support is enabled by default
+          "tinymist"
+          "clangd"
+          "ocamllsp"
+          "hls"
+          "nil_ls"
+          "rescriptls"]))}
  {1 "pmizio/typescript-tools.nvim"
   :event ["BufReadPost" "BufNewFile"]
   :dependencies ["nvim-lua/plenary.nvim"
@@ -54,7 +52,7 @@
      {:repl_definition
       {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
        :python {:command #(or vim.g.iron#cmd#python ["python"])
-                :format (dot (require :iron.fts.common) bracketed_paste)}}
+                :format (dot (require :iron.fts.common) bracketed_paste_python)}}
       :repl_open_cmd (dot (require :iron.view) (split "25%"))}})}
  {1 "mickael-menu/zk-nvim"
   :config

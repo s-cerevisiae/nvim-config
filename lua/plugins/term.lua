@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/plugins/term.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/plugins/term.fnl
 local function _1_(term)
   local _2_ = term.direction
   if (_2_ == "horizontal") then

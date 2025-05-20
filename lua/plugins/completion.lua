@@ -1,2 +1,2 @@
--- [nfnl] Compiled from fnl/plugins/completion.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/plugins/completion.fnl
 return {{"saghen/blink.cmp", version = "*", event = {"InsertEnter", "CmdlineEnter"}, opts = {keymap = {preset = "enter", ["<Tab>"] = {"select_next", "fallback"}, ["<S-Tab>"] = {"select_prev", "fallback"}}, cmdline = {keymap = {preset = "inherit", ["<Tab>"] = {"show_and_insert", "select_next"}, ["<S-Tab>"] = {"show_and_insert", "select_prev"}}}, completion = {list = {selection = {preselect = false}}}}}}

@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/plugins/picker.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/plugins/picker.fnl
 local function _1_()
   local small = (vim.o.lines < 30)
   local _2_

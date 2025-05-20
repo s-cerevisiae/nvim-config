@@ -103,6 +103,18 @@
     ["f" #(iron.send_file) "Send the whole file"]
     ["m" #(iron.send_mark) "Send marked"]))
 
+(let [dap (autoload :dap)]
+  (map-group "<leader>d" "debugging"
+    ["d" #(dap.continue) "Run / Continue"]
+    ["b" #(dap.toggle_breakpoint) "Toggle Breakpoint"]
+    ["j" #(dap.step_over) "Step Over"]
+    ["h" #(dap.step_into) "Step Into"]
+    ["l" #(dap.step_out) "Step Out"]
+    ["k" #(dap.step_back) "Step Back"]
+    ["q" #(dap.terminate) "Quit Session"]
+    ["w" "<cmd>DapViewWatch<cr>" "Watch Variable"]
+    ["v" "<cmd>DapViewToggle<cr>" "Toggle Debug View"]))
+
 (let [toggle-diags #(let [{: virtual_text
                            : virtual_lines} (vim.diagnostic.config)]
                       (vim.diagnostic.config
@@ -112,7 +124,7 @@
   (map-group "<leader>" "leader"
     ["<leader>" #(fzf :commands) "Command Palette"]
     ["b" #(fzf :buffers) "Buffers"]
-    ["d" toggle-diags "Toggle Diagnostics Style"]
+    ["D" toggle-diags "Toggle Diagnostics Style"]
     ["g" "<cmd>Neogit<cr>" "Neogit"]
     ["w" "<c-w>" "window" {:remap true}]
     ["W" #(dot (require :which-key) (show {:keys "<c-w>" :loop true})) "window persist"]

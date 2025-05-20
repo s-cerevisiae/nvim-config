@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/config/options.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/config/options.fnl
 local _local_1_ = require("utils")
 local augroup = _local_1_["augroup"]
 local autocmd_21 = _local_1_["autocmd!"]
@@ -16,6 +16,6 @@ local function set_scrolloff()
   vim.wo.scrolloff = quotient(height, 5)
   return nil
 end
-local tmp_9_auto = augroup("SetScrollOff")
-autocmd_21(tmp_9_auto, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
-return tmp_9_auto
+local tmp_9_ = augroup("SetScrollOff")
+autocmd_21(tmp_9_, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
+return tmp_9_

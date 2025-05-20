@@ -1,15 +1,15 @@
--- [nfnl] Compiled from fnl/config/diagnostics.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/config/diagnostics.fnl
 local function gen_sign(f)
   local sign_names = {"Error", "Warn", "Info", "Hint"}
-  local tbl_16_auto = {}
+  local tbl_16_ = {}
   for _, name in ipairs(sign_names) do
-    local k_17_auto, v_18_auto = vim.diagnostic.severity[string.upper(name)], f(name)
-    if ((k_17_auto ~= nil) and (v_18_auto ~= nil)) then
-      tbl_16_auto[k_17_auto] = v_18_auto
+    local k_17_, v_18_ = vim.diagnostic.severity[string.upper(name)], f(name)
+    if ((k_17_ ~= nil) and (v_18_ ~= nil)) then
+      tbl_16_[k_17_] = v_18_
     else
     end
   end
-  return tbl_16_auto
+  return tbl_16_
 end
 local function define_linehl(severity)
   local _let_2_ = vim.api.nvim_get_hl(0, {name = ("DiagnosticVirtualText" .. severity), link = false})

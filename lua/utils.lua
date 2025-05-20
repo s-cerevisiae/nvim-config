@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/utils.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/utils.fnl
 local function augroup(group, clear)
   return vim.api.nvim_create_augroup(group, {clear = clear})
 end

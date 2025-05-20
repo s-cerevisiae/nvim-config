@@ -1,2 +1,2 @@
--- [nfnl] Compiled from fnl/plugins/compiler.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/plugins/compiler.fnl
 return {{"Olical/nfnl", ft = "fennel"}}

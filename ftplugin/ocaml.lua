@@ -1,4 +1,4 @@
--- [nfnl] Compiled from ftplugin/ocaml.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] ftplugin/ocaml.fnl
 vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 return nil

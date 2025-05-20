@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/plugins/editing.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/plugins/editing.fnl
 local function _1_()
   local insx = require("insx")
   local esc = insx.helper.regex.esc

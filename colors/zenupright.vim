@@ -9,8 +9,6 @@ highlight diffNewFile gui=NONE cterm=NONE
 highlight diffOldFile gui=NONE cterm=NONE
 
 " custom highlight for blink.cmp
-highlight link BlinkCmpLabel NONE
-highlight link BlinkCmpLabelDetail NONE
 highlight link BlinkCmpKind NONE
 highlight link BlinkCmpLabelMatch Special
 
