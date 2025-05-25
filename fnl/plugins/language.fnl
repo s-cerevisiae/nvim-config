@@ -52,7 +52,8 @@
      {:repl_definition
       {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
        :python {:command #(or vim.g.iron#cmd#python ["python"])
-                :format (dot (require :iron.fts.common) bracketed_paste_python)}}
+                :format (dot (require :iron.fts.common) bracketed_paste_python)}
+       :fennel {:command ["nvim" "-l" (.. (vim.fn.stdpath "data") "/lazy/nfnl/script/fennel.lua")]}}
       :repl_open_cmd (dot (require :iron.view) (split "25%"))}})}
  {1 "mickael-menu/zk-nvim"
   :config

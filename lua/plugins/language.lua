@@ -18,7 +18,7 @@ local function _3_()
   local function _5_()
     return (vim.g["iron#cmd#python"] or {"python"})
   end
-  return require("iron.core").setup({config = {repl_definition = {scheme = {command = _4_}, python = {command = _5_, format = require("iron.fts.common").bracketed_paste_python}}, repl_open_cmd = require("iron.view").split("25%")}})
+  return require("iron.core").setup({config = {repl_definition = {scheme = {command = _4_}, python = {command = _5_, format = require("iron.fts.common").bracketed_paste_python}, fennel = {command = {"nvim", "-l", (vim.fn.stdpath("data") .. "/lazy/nfnl/script/fennel.lua")}}}, repl_open_cmd = require("iron.view").split("25%")}})
 end
 local function _6_()
   return require("zk").setup({picker = "fzf_lua"})

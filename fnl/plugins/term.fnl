@@ -6,4 +6,7 @@
              :horizontal (quotient vim.o.lines 4)
              :vertical (quotient vim.o.columns 2)))
    :float_opts {:border "curved"}
-   :persist_mode false}}]
+   :persist_mode false}}
+ {1 "s-cerevisiae/flatten.nvim"
+  :priority 1000
+  :opts true}]

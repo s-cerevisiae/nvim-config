@@ -6,4 +6,4 @@ end
 local function _2_()
   return vim.cmd("colorscheme zenupright")
 end
-return {{"mcchrish/zenbones.nvim", priority = 1000, init = _1_, config = _2_}}
+return {{"mcchrish/zenbones.nvim", priority = 100, init = _1_, config = _2_}}
