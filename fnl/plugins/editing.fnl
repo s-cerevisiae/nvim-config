@@ -23,8 +23,7 @@
          (insx.with
            ((require :insx.recipe.auto_pair)
             {:open l :close r})
-           [(insx.with.in_string false)
-            (insx.with.undopoint)])))
+           [(insx.with.undopoint)])))
      (fn fast-break! [l r]
        (insx.add "<CR>"
          ((require :insx.recipe.fast_break)
@@ -39,7 +38,9 @@
          (insx.add "<BS>"
            ((require :insx.recipe.delete_pair) pats))
          (insx.add "<BS>"
-           (soft-delete pats))))
+           (insx.with
+             (soft-delete pats)
+             [(insx.with.in_string false)]))))
      (each [_ [l r] (ipairs [["(" ")"]
                              ["[" "]"]
                              ["{" "}"]])]

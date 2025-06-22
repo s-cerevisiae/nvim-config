@@ -31,6 +31,7 @@
 
 (prequire :config.options)
 (prequire :config.events)
+(prequire :config.filetypes)
 (prequire :config.commands)
 (prequire :config.diagnostics)
 (prequire :config.keymaps)

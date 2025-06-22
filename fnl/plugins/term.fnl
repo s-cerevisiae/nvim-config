@@ -9,4 +9,5 @@
    :persist_mode false}}
  {1 "s-cerevisiae/flatten.nvim"
   :priority 1000
-  :opts true}]
+  :opts {:window {:open "alternate"}
+         :block_for {:fish true}}}]

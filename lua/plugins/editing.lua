@@ -3,7 +3,7 @@ local function _1_()
   local insx = require("insx")
   local esc = insx.helper.regex.esc
   local function auto_pair_21(l, r)
-    return insx.add(l, insx.with(require("insx.recipe.auto_pair")({open = l, close = r}), {insx.with.in_string(false), insx.with.undopoint()}))
+    return insx.add(l, insx.with(require("insx.recipe.auto_pair")({open = l, close = r}), {insx.with.undopoint()}))
   end
   local function fast_break_21(l, r)
     return insx.add("<CR>", require("insx.recipe.fast_break")({open_pat = esc(l), close_pat = esc(r)}))
@@ -20,7 +20,7 @@ local function _1_()
   local function delete_pair_21(l, r)
     local pats = {open_pat = esc(l), close_pat = esc(r)}
     insx.add("<BS>", require("insx.recipe.delete_pair")(pats))
-    return insx.add("<BS>", soft_delete(pats))
+    return insx.add("<BS>", insx.with(soft_delete(pats), {insx.with.in_string(false)}))
   end
   for _, _4_ in ipairs({{"(", ")"}, {"[", "]"}, {"{", "}"}}) do
     local l = _4_[1]
