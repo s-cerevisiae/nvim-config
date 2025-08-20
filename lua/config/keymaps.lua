@@ -56,7 +56,7 @@ end
 local function _9_()
   return fzf("files")
 end
-map_group("<leader>f", "file", {"f", _9_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
+map_group("<leader>f", "file", {"f", _9_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Fyler<cr>", "File Tree"})
 local function _10_()
   return fzf("lsp_code_actions")
 end

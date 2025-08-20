@@ -3,7 +3,7 @@
 ### Usage
 
 - Make sure the requirements are satisfied.
-- Clone into `$HOME/.config/nvim` (unix) or `%LOCALAPPDATA%\nvim`.
+- Clone into `$HOME/.config/nvim` (unix) or `%LOCALAPPDATA%\nvim` (win).
 - Launch `nvim` and wait.
 
 ### Requirements
@@ -14,3 +14,5 @@
 - ripgrep
 - fd
 - fzf
+- curl
+- tar

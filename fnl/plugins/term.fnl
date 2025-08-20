@@ -9,5 +9,11 @@
    :persist_mode false}}
  {1 "s-cerevisiae/flatten.nvim"
   :priority 1000
-  :opts {:window {:open "alternate"}
-         :block_for {:fish true}}}]
+  :opts #(let [flatten (require :flatten)]
+           {:window {:open "tab"}
+            :block_for {:fish true
+                        :jjdescription true}
+            :hooks {:should_block (fn [argv]
+                                    (or (flatten.hooks.should_block argv)
+                                        vim.env.FLATTEN_BLOCK
+                                        false))}})}]

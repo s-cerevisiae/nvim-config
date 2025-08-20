@@ -48,8 +48,6 @@
   :event "VeryLazy"
   :version "3"
   :opts {:delay 200}}
- {1 "stevearc/dressing.nvim"
-  :dependencies ["ibhagwan/fzf-lua"]}
  {1 "j-hui/fidget.nvim"
   :opts {:notification {:override_vim_notify true}}}
  "kevinhwang91/nvim-bqf"]

@@ -3,4 +3,8 @@
          :winopts #(let [small (< vim.o.lines 30)]
                      {:fullscreen small
                       :preview {:wrap "wrap"
-                                :hidden (if small "hidden" "nohidden")}})}}]
+                                :hidden (if small "hidden" "nohidden")}})}
+  :config (fn [_ opts]
+            (let [fzf (require :fzf-lua)]
+              (fzf.setup opts)
+              (fzf.register_ui_select)))}]

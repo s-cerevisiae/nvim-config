@@ -18,16 +18,13 @@ local function _3_()
   local function _5_()
     return (vim.g["iron#cmd#python"] or {"python"})
   end
-  return require("iron.core").setup({config = {repl_definition = {scheme = {command = _4_}, python = {command = _5_, format = require("iron.fts.common").bracketed_paste}, fennel = {command = {"nvim", "-l", (vim.fn.stdpath("data") .. "/lazy/nfnl/script/fennel.lua")}}}, repl_open_cmd = require("iron.view").split("25%")}})
+  return {config = {repl_definition = {scheme = {command = _4_}, python = {command = _5_, format = require("iron.fts.common").bracketed_paste}, fennel = {command = {"nvim", "-l", (vim.fn.stdpath("data") .. "/lazy/nfnl/script/fennel.lua")}}}, repl_open_cmd = require("iron.view").split("25%")}}
 end
-local function _6_()
-  return require("zk").setup({picker = "fzf_lua"})
-end
-local _7_
+local _6_
 do
   local web_fts = {"javascript", "javascriptreact", "typescript", "typescriptreact", "json"}
   local web_extra_fts = {"css", "scss", "html", "jsonc"}
-  local _8_
+  local _7_
   do
     local tbl_16_ = {}
     for _, ft in pairs(web_fts) do
@@ -37,9 +34,9 @@ do
       else
       end
     end
-    _8_ = tbl_16_
+    _7_ = tbl_16_
   end
-  local _10_
+  local _9_
   do
     local tbl_16_ = {}
     for _, ft in pairs(web_extra_fts) do
@@ -49,8 +46,8 @@ do
       else
       end
     end
-    _10_ = tbl_16_
+    _9_ = tbl_16_
   end
-  _7_ = {formatters_by_ft = vim.tbl_extend("keep", _8_, _10_, {python = {"ruff_format"}})}
+  _6_ = {formatters_by_ft = vim.tbl_extend("keep", _7_, _9_, {python = {"ruff_format"}})}
 end
-return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = {"BufReadPost", "BufNewFile"}, dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mrcjkb/rustaceanvim", "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", config = _3_}, {"mickael-menu/zk-nvim", config = _6_}, {"stevearc/conform.nvim", opts = _7_}}
+return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = {"BufReadPost", "BufNewFile"}, dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mrcjkb/rustaceanvim", "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", main = "iron.core", opts = _3_}, {"mickael-menu/zk-nvim", main = "zk", opts = {picker = "fzf_lua"}}, {"stevearc/conform.nvim", opts = _6_}}

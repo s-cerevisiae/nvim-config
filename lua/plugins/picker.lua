@@ -9,4 +9,9 @@ local function _1_()
   end
   return {fullscreen = small, preview = {wrap = "wrap", hidden = _2_}}
 end
-return {{"ibhagwan/fzf-lua", opts = {fzf_colors = true, winopts = _1_}}}
+local function _4_(_, opts)
+  local fzf = require("fzf-lua")
+  fzf.setup(opts)
+  return fzf.register_ui_select()
+end
+return {{"ibhagwan/fzf-lua", opts = {fzf_colors = true, winopts = _1_}, config = _4_}}

@@ -46,19 +46,17 @@
  "kaarmu/typst.vim"
  {1 "Vigemus/iron.nvim"
   :cmd :IronRepl
-  :config
-  #((dot (require :iron.core) setup)
-    {:config
-     {:repl_definition
-      {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
-       :python {:command #(or vim.g.iron#cmd#python ["python"])
-                :format (dot (require :iron.fts.common) bracketed_paste)}
-       :fennel {:command ["nvim" "-l" (.. (vim.fn.stdpath "data") "/lazy/nfnl/script/fennel.lua")]}}
-      :repl_open_cmd (dot (require :iron.view) (split "25%"))}})}
+  :main "iron.core"
+  :opts #{:config
+          {:repl_definition
+           {:scheme {:command #(or vim.g.iron#cmd#scheme ["guile"])}
+            :python {:command #(or vim.g.iron#cmd#python ["python"])
+                     :format (dot (require :iron.fts.common) bracketed_paste)}
+            :fennel {:command ["nvim" "-l" (.. (vim.fn.stdpath "data") "/lazy/nfnl/script/fennel.lua")]}}
+           :repl_open_cmd (dot (require :iron.view) (split "25%"))}}}
  {1 "mickael-menu/zk-nvim"
-  :config
-  #(dot (require :zk)
-        (setup {:picker "fzf_lua"}))}
+  :main "zk"
+  :opts {:picker "fzf_lua"}}
 
  ;; Formatter
  {1 "stevearc/conform.nvim"
