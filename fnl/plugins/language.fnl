@@ -12,7 +12,7 @@
          {:filetypes ["racket"]})
        (vim.lsp.config "denols"
          {:root_markers ["deno.json" "deno.jsonc"]})
-       (vim.lsp.config "pyright"
+       (vim.lsp.config "basedpyright"
          {:settings {:python {:analysis {:ignore "*"}}}})
        (vim.lsp.enable
          ["racket_langserver"
@@ -20,7 +20,7 @@
           "denols"
           ;; ruff is no longer a hover provider
           "ruff"
-          "pyright"
+          "basedpyright"
           ;; single file support is enabled by default
           "tinymist"
           "clangd"
