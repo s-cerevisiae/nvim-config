@@ -31,18 +31,15 @@
      : sections}})
  {1 "b0o/incline.nvim"
   :opts {:hide {:cursorline true}
-         :window {:margin {:vertical {:top 0 :bottom 0}
-                           :horizontal {:left 0 :right 0}}
-                  :padding {:left 1 :right 1}}
-                  ; :padding_char ""
+         :window {:margin {:vertical 0 :horizontal 0}}
          :render (fn [props]
                    (let [filename (-> props.buf
                                       (vim.api.nvim_buf_get_name)
                                       (vim.fn.fnamemodify ":~:."))
-                         indicator (if (. vim.bo props.buf :modified) " ●"
-                                       (. vim.bo props.buf :readonly) " 󰌾"
+                         indicator (if (. vim.bo props.buf :modified) "● "
+                                       (. vim.bo props.buf :readonly) "󰌾 "
                                        "")]
-                     [filename indicator]))}}
+                     [indicator filename]))}}
 
  {1 "folke/which-key.nvim"
   :event "VeryLazy"

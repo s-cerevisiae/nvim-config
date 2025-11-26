@@ -1,6 +1,6 @@
 -- [nfnl] fnl/config/keymaps.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local function _2_()
   if (0 == vim.v.count) then
     return "gk"
@@ -56,7 +56,7 @@ end
 local function _9_()
   return fzf("files")
 end
-map_group("<leader>f", "file", {"f", _9_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Fyler<cr>", "File Tree"})
+map_group("<leader>f", "file", {"f", _9_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
 local function _10_()
   return fzf("lsp_code_actions")
 end
@@ -125,8 +125,8 @@ end
 local toggle_diags
 local function _27_()
   local _let_28_ = vim.diagnostic.config()
-  local virtual_text = _let_28_["virtual_text"]
-  local virtual_lines = _let_28_["virtual_lines"]
+  local virtual_text = _let_28_.virtual_text
+  local virtual_lines = _let_28_.virtual_lines
   return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
 end
 toggle_diags = _27_

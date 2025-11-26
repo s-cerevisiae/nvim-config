@@ -61,7 +61,7 @@
 (map-group "<leader>f" "file"
   ["f" #(fzf :files) "File Finder"]
   ["b" "<cmd>Oil<cr>" "File Browser"]
-  ["t" "<cmd>Fyler<cr>" "File Tree"])
+  ["t" "<cmd>Neotree toggle reveal=true position=current<cr>" "File Tree"])
 
 (map-group "<leader>l" "lang"
   ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]

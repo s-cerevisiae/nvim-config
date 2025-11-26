@@ -16,10 +16,12 @@
          {:settings {:python {:analysis {:ignore "*"}}}})
        (vim.lsp.enable
          ["racket_langserver"
+          "rust_analyzer"
           ;; use workspace_required in the future
           "denols"
           ;; ruff is no longer a hover provider
           "ruff"
+          "jdtls"
           "basedpyright"
           ;; single file support is enabled by default
           "tinymist"
@@ -29,14 +31,13 @@
           "nil_ls"
           "rescriptls"]))}
  {1 "pmizio/typescript-tools.nvim"
-  :event ["BufReadPost" "BufNewFile"]
+  :event "VeryLazy"
   :dependencies ["nvim-lua/plenary.nvim"
                  "neovim/nvim-lspconfig"]
   :opts #{:capabilities (get-cap)
           :root_dir (dot (require :lspconfig) util (root_pattern "package.json"))
           :single_file_support false
           :settings {:tsserver_max_memory 4096}}}
- "mrcjkb/rustaceanvim"
  "mfussenegger/nvim-jdtls"
 
  ;; Language plugins
@@ -62,9 +63,9 @@
  {1 "stevearc/conform.nvim"
   :opts (let [web-fts ["javascript" "javascriptreact"
                        "typescript" "typescriptreact"
-                       "json"]
+                       "css" "html" "json" "jsonc"]
               ;; Not supported by biome yet
-              web-extra-fts ["css" "scss" "html" "jsonc"]]
+              web-extra-fts ["scss"]]
           {:formatters_by_ft
            (vim.tbl_extend "keep"
              (collect [_ ft (pairs web-fts)]
