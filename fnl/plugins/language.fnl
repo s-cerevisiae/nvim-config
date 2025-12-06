@@ -58,6 +58,9 @@
  {1 "mickael-menu/zk-nvim"
   :main "zk"
   :opts {:picker "fzf_lua"}}
+ {1 "MeanderingProgrammer/render-markdown.nvim"
+  :cmd :RenderMarkdown
+  :config true}
 
  ;; Formatter
  {1 "stevearc/conform.nvim"

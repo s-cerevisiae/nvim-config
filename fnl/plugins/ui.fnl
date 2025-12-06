@@ -3,7 +3,9 @@
 [(let [mode-short {1 "mode" :fmt #($:sub 1 1)}
 
        tabs {1 "tabs"
-             :show_modified_status false}
+             :show_modified_status false
+             :tabs_color {:active "lualine_b_normal"
+                          :inactive "lualine_b_inactive"}}
 
        line-short {:lualine_a [mode-short]
                    :lualine_b [tabs]

@@ -6,7 +6,7 @@ do
     return _241:sub(1, 1)
   end
   mode_short = {"mode", fmt = _2_}
-  local tabs = {"tabs", show_modified_status = false}
+  local tabs = {"tabs", tabs_color = {active = "lualine_b_normal", inactive = "lualine_b_inactive"}, show_modified_status = false}
   local line_short = {lualine_a = {mode_short}, lualine_b = {tabs}, lualine_c = {"diagnostics"}, lualine_x = {"filetype"}, lualine_y = {"progress"}, lualine_z = {"location"}}
   local line_full = {lualine_a = {"mode"}, lualine_b = {tabs}, lualine_c = {"branch", "diff", "diagnostics"}, lualine_x = {"encoding", "fileformat", "filetype"}, lualine_y = {"progress"}, lualine_z = {"location"}}
   local sections

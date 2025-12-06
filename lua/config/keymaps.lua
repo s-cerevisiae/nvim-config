@@ -34,6 +34,22 @@ local function _8_()
   return require("flash").remote()
 end
 vim.keymap.set({"o"}, "r", _8_)
+do
+  local select = autoload("nvim-treesitter-textobjects.select")
+  local mode = {"x", "o"}
+  local function map_ts(key, sel)
+    local function _9_()
+      return select.select_textobject(sel, "textobjects")
+    end
+    return vim.keymap.set(mode, key, _9_, {desc = sel})
+  end
+  map_ts("af", "@function.outer")
+  map_ts("if", "@function.inner")
+  map_ts("ac", "@conditional.outer")
+  map_ts("ic", "@conditional.inner")
+  map_ts("aa", "@parameter.outer")
+  map_ts("ia", "@parameter.inner")
+end
 local function fzf(cmd, opts)
   return require("fzf-lua")[cmd](opts)
 end
@@ -53,102 +69,102 @@ local function map_group(prefix, desc, ...)
   end
   return nil
 end
-local function _9_()
+local function _10_()
   return fzf("files")
 end
-map_group("<leader>f", "file", {"f", _9_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
-local function _10_()
+map_group("<leader>f", "file", {"f", _10_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
+local function _11_()
   return fzf("lsp_code_actions")
 end
-local function _11_()
+local function _12_()
   return fzf("diagnostics_document", {sort = true})
 end
-local function _12_()
+local function _13_()
   return fzf("diagnostics_workspace", {sort = true})
 end
-local function _13_()
+local function _14_()
   return require("conform").format({lsp_fallback = true, stop_after_first = true, async = true})
 end
-local function _14_()
+local function _15_()
   return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
-map_group("<leader>l", "lang", {"a", _10_, "Code Actions", {mode = {"n", "v"}}}, {"d", _11_, "Local Diagnostics"}, {"D", _12_, "Workspace Diagnostics"}, {"f", _13_, "Format buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _14_, "Toggle inlay hint"})
+map_group("<leader>l", "lang", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle inlay hint"})
 map_group("<leader>lg", "goto", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
 map_group("<leader>t", "term", {"t", "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal"}, {"l", "<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 Terminal"}, {"j", "<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
 do
   local iron = autoload("iron.core")
   local send_visual
-  local function _15_()
+  local function _16_()
     iron.mark_visual()
     return iron.send_mark()
   end
-  send_visual = _15_
-  local function _16_()
+  send_visual = _16_
+  local function _17_()
     return iron.run_motion("send_motion")
   end
-  local function _17_()
+  local function _18_()
     return iron.send_line()
   end
-  local function _18_()
+  local function _19_()
     return iron.send_file()
   end
-  local function _19_()
+  local function _20_()
     return iron.send_mark()
   end
-  map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _16_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _17_, "Send current line"}, {"f", _18_, "Send the whole file"}, {"m", _19_, "Send marked"})
+  map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _17_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _18_, "Send current line"}, {"f", _19_, "Send the whole file"}, {"m", _20_, "Send marked"})
 end
 do
   local dap = autoload("dap")
-  local function _20_()
+  local function _21_()
     return dap.continue()
   end
-  local function _21_()
+  local function _22_()
     return dap.toggle_breakpoint()
   end
-  local function _22_()
+  local function _23_()
     return dap.step_over()
   end
-  local function _23_()
+  local function _24_()
     return dap.step_into()
   end
-  local function _24_()
+  local function _25_()
     return dap.step_out()
   end
-  local function _25_()
+  local function _26_()
     return dap.step_back()
   end
-  local function _26_()
+  local function _27_()
     return dap.terminate()
   end
-  map_group("<leader>d", "debugging", {"d", _20_, "Run / Continue"}, {"b", _21_, "Toggle Breakpoint"}, {"j", _22_, "Step Over"}, {"h", _23_, "Step Into"}, {"l", _24_, "Step Out"}, {"k", _25_, "Step Back"}, {"q", _26_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
+  map_group("<leader>d", "debugging", {"d", _21_, "Run / Continue"}, {"b", _22_, "Toggle Breakpoint"}, {"j", _23_, "Step Over"}, {"h", _24_, "Step Into"}, {"l", _25_, "Step Out"}, {"k", _26_, "Step Back"}, {"q", _27_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
 end
 local toggle_diags
-local function _27_()
-  local _let_28_ = vim.diagnostic.config()
-  local virtual_text = _let_28_.virtual_text
-  local virtual_lines = _let_28_.virtual_lines
+local function _28_()
+  local _let_29_ = vim.diagnostic.config()
+  local virtual_text = _let_29_.virtual_text
+  local virtual_lines = _let_29_.virtual_lines
   return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
 end
-toggle_diags = _27_
+toggle_diags = _28_
 local mc = require("multicursor-nvim")
-local function _29_()
+local function _30_()
   return fzf("commands")
 end
-local function _30_()
+local function _31_()
   return fzf("buffers")
 end
-local function _31_()
+local function _32_()
   return require("which-key").show({keys = "<c-w>", loop = true})
 end
-map_group("<leader>", "leader", {"<leader>", _29_, "Command Palette"}, {"b", _30_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _31_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
-local function _32_(layer)
-  local function _33_()
+map_group("<leader>", "leader", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _32_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
+local function _33_(layer)
+  local function _34_()
     if not mc.cursorsEnabled() then
       return mc.enableCursors()
     else
       return mc.clearCursors()
     end
   end
-  return layer("n", "<esc>", _33_)
+  return layer("n", "<esc>", _34_)
 end
-return mc.addKeymapLayer(_32_)
+return mc.addKeymapLayer(_33_)

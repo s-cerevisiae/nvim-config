@@ -10,6 +10,7 @@
 
 - Rust toolchain (for parinfer)
 - C compiler (for tree-sitter parsers)
+- tree-sitter CLI (for tree-sitter parsers, it fails silently without this)
 - git
 - ripgrep
 - fd

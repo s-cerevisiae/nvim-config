@@ -50,4 +50,4 @@ do
   end
   _6_ = {formatters_by_ft = vim.tbl_extend("keep", _7_, _9_, {python = {"ruff_format"}})}
 end
-return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = "VeryLazy", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", main = "iron.core", opts = _3_}, {"mickael-menu/zk-nvim", main = "zk", opts = {picker = "fzf_lua"}}, {"stevearc/conform.nvim", opts = _6_}}
+return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = "VeryLazy", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", main = "iron.core", opts = _3_}, {"mickael-menu/zk-nvim", main = "zk", opts = {picker = "fzf_lua"}}, {"MeanderingProgrammer/render-markdown.nvim", cmd = "RenderMarkdown", config = true}, {"stevearc/conform.nvim", opts = _6_}}

@@ -43,6 +43,20 @@
 (vim.keymap.set ["o"] "r"
   #(dot (require :flash) (remote)))
 
+;; tree-sitter text objects
+(let [select (autoload :nvim-treesitter-textobjects.select)
+      mode ["x" "o"]]
+  (fn map-ts [key sel]
+    (vim.keymap.set mode key
+      #(select.select_textobject sel "textobjects")
+      {:desc sel}))
+  (map-ts "af" "@function.outer")
+  (map-ts "if" "@function.inner")
+  (map-ts "ac" "@conditional.outer")
+  (map-ts "ic" "@conditional.inner")
+  (map-ts "aa" "@parameter.outer")
+  (map-ts "ia" "@parameter.inner"))
+
 (fn fzf [cmd opts] ((dot (require :fzf-lua) [cmd]) opts))
 
 (fn map [key val desc opts]
