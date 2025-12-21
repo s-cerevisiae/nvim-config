@@ -5,7 +5,8 @@
            (match term.direction
              :horizontal (quotient vim.o.lines 4)
              :vertical (quotient vim.o.columns 2)))
-   :float_opts {:border "curved"}
+   ;; this interfere with my autocmds
+   :start_in_insert false
    :persist_mode false}}
  {1 "s-cerevisiae/flatten.nvim"
   :priority 1000

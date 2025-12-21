@@ -60,9 +60,8 @@ local function map(key, val, desc, opts)
   opts0.desc = desc
   return vim.keymap.set(mode, key, val, opts0)
 end
-local function map_group(prefix, desc, ...)
+local function map_group(prefix, ...)
   local group = {...}
-  map(prefix, "", desc)
   for _, m in ipairs(group) do
     m[1] = (prefix .. m[1])
     map(unpack(m))
@@ -72,7 +71,7 @@ end
 local function _10_()
   return fzf("files")
 end
-map_group("<leader>f", "file", {"f", _10_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
+map_group("<leader>f", {"f", _10_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
 local function _11_()
   return fzf("lsp_code_actions")
 end
@@ -88,9 +87,9 @@ end
 local function _15_()
   return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
-map_group("<leader>l", "lang", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle inlay hint"})
-map_group("<leader>lg", "goto", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
-map_group("<leader>t", "term", {"t", "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal"}, {"l", "<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 Terminal"}, {"j", "<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
+map_group("<leader>l", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format Buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle Inlay Hint"})
+map_group("<leader>lg", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
+map_group("<leader>t", {"t", "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal"}, {"l", "<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 Terminal"}, {"j", "<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
 do
   local iron = autoload("iron.core")
   local send_visual
@@ -111,7 +110,7 @@ do
   local function _20_()
     return iron.send_mark()
   end
-  map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _17_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _18_, "Send current line"}, {"f", _19_, "Send the whole file"}, {"m", _20_, "Send marked"})
+  map_group("<leader>r", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _17_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _18_, "Send current line"}, {"f", _19_, "Send the whole file"}, {"m", _20_, "Send marked"})
 end
 do
   local dap = autoload("dap")
@@ -136,7 +135,7 @@ do
   local function _27_()
     return dap.terminate()
   end
-  map_group("<leader>d", "debugging", {"d", _21_, "Run / Continue"}, {"b", _22_, "Toggle Breakpoint"}, {"j", _23_, "Step Over"}, {"h", _24_, "Step Into"}, {"l", _25_, "Step Out"}, {"k", _26_, "Step Back"}, {"q", _27_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
+  map_group("<leader>d", {"d", _21_, "Run / Continue"}, {"b", _22_, "Toggle Breakpoint"}, {"j", _23_, "Step Over"}, {"h", _24_, "Step Into"}, {"l", _25_, "Step Out"}, {"k", _26_, "Step Back"}, {"q", _27_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
 end
 local toggle_diags
 local function _28_()
@@ -153,18 +152,19 @@ end
 local function _31_()
   return fzf("buffers")
 end
-local function _32_()
-  return require("which-key").show({keys = "<c-w>", loop = true})
-end
-map_group("<leader>", "leader", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"W", _32_, "window persist"}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c/", mc.matchCursors, "Match Cursors", {mode = "v"}})
-local function _33_(layer)
-  local function _34_()
+map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
+local function _32_(layer)
+  local function _33_()
     if not mc.cursorsEnabled() then
       return mc.enableCursors()
     else
-      return mc.clearCursors()
+      return nil
     end
   end
-  return layer("n", "<esc>", _34_)
+  layer("n", "<cr>", _33_)
+  local function _35_()
+    return mc.clearCursors()
+  end
+  return layer("n", "<c-c>", _35_)
 end
-return mc.addKeymapLayer(_33_)
+return mc.addKeymapLayer(_32_)

@@ -25,7 +25,7 @@
          (print $1))))
 
 (set vim.g.mapleader " ")
-(set vim.g.maplocalleader ",")
+(set vim.g.maplocalleader "\\")
 
 (dot (require :lazy) (setup "plugins"))
 

@@ -66,18 +66,17 @@
     (set opts.desc desc)
     (vim.keymap.set mode key val opts)))
 
-(fn map-group [prefix desc & group]
-  (map prefix "" desc)
+(fn map-group [prefix & group]
   (each [_ m (ipairs group)]
     (set (. m 1) (.. prefix (. m 1)))
     (map (unpack m))))
 
-(map-group "<leader>f" "file"
+(map-group "<leader>f"
   ["f" #(fzf :files) "File Finder"]
   ["b" "<cmd>Oil<cr>" "File Browser"]
   ["t" "<cmd>Neotree toggle reveal=true position=current<cr>" "File Tree"])
 
-(map-group "<leader>l" "lang"
+(map-group "<leader>l"
   ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
   ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
   ["D" #(fzf :diagnostics_workspace {:sort true}) "Workspace Diagnostics"]
@@ -85,22 +84,22 @@
              (format {:lsp_fallback true
                       :stop_after_first true
                       :async true}))
-       "Format buffer"
+       "Format Buffer"
        {:mode ["n" "v"]}]
   ["h" vim.lsp.buf.document_highlight "Document Highlight"]
   ["r" vim.lsp.buf.rename "Rename Symbol"]
   ["i" #(vim.lsp.inlay_hint.enable
           (not (vim.lsp.inlay_hint.is_enabled)))
-       "Toggle inlay hint"])
+       "Toggle Inlay Hint"])
 
-(map-group "<leader>lg" "goto"
+(map-group "<leader>lg"
   ["i" vim.lsp.buf.implementation "Go to Implementation"]
   ["d" vim.lsp.buf.definition "Go to Definition"]
   ["D" vim.lsp.buf.declaration "Go to Declaration"]
   ["t" vim.lsp.buf.type_definition "Go to Type Definition"]
   ["r" vim.lsp.buf.references "Go to References"])
 
-(map-group "<leader>t" "term"
+(map-group "<leader>t"
   ["t" "<cmd>ToggleTerm direction=float<cr>" "Toggle Floating Terminal"]
   ["l" "<cmd>ToggleTerm direction=vertical<cr>" "Toggle → Terminal"]
   ["j" "<cmd>ToggleTerm direction=horizontal<cr>" "Toggle ↓ Terminal"]
@@ -109,7 +108,7 @@
 (let [iron (autoload :iron.core)
       send-visual #(do (iron.mark_visual)
                        (iron.send_mark))]
-  (map-group "<leader>r" "repl"
+  (map-group "<leader>r"
     ["r" send-visual "Send visual selection" {:mode "v"}]
     ["r" #(iron.run_motion "send_motion") "Send motion" {:mode "n"}]
     ["t" "<cmd>IronRepl<cr>" "Toggle REPL"]
@@ -118,7 +117,7 @@
     ["m" #(iron.send_mark) "Send marked"]))
 
 (let [dap (autoload :dap)]
-  (map-group "<leader>d" "debugging"
+  (map-group "<leader>d"
     ["d" #(dap.continue) "Run / Continue"]
     ["b" #(dap.toggle_breakpoint) "Toggle Breakpoint"]
     ["j" #(dap.step_over) "Step Over"]
@@ -135,18 +134,17 @@
                         {:virtual_text (not virtual_text)
                          :virtual_lines (not virtual_lines)}))
       mc (require :multicursor-nvim)]
-  (map-group "<leader>" "leader"
+  (map-group "<leader>"
     ["<leader>" #(fzf :commands) "Command Palette"]
     ["b" #(fzf :buffers) "Buffers"]
     ["D" toggle-diags "Toggle Diagnostics Style"]
     ["g" "<cmd>Neogit<cr>" "Neogit"]
     ["w" "<c-w>" "window" {:remap true}]
-    ["W" #(dot (require :which-key) (show {:keys "<c-w>" :loop true})) "window persist"]
     ["c" mc.toggleCursor "Multiple Cursors"]
-    ["c/" mc.matchCursors "Match Cursors" {:mode "v"}])
+    ["c" mc.matchCursors "Match Cursors" {:mode "v"}])
 
   (mc.addKeymapLayer
    (fn [layer]
-     (layer "n" "<esc>" #(if (not (mc.cursorsEnabled))
-                             (mc.enableCursors)
-                             (mc.clearCursors))))))
+     (layer "n" "<cr>" #(when (not (mc.cursorsEnabled))
+                          (mc.enableCursors)))
+     (layer "n" "<c-c>" #(mc.clearCursors)))))

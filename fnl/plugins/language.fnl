@@ -21,8 +21,8 @@
           "denols"
           ;; ruff is no longer a hover provider
           "ruff"
+          "ty"
           "jdtls"
-          "basedpyright"
           ;; single file support is enabled by default
           "tinymist"
           "clangd"

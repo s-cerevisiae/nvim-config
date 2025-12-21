@@ -9,8 +9,14 @@ highlight SpecialKey gui=NONE cterm=NONE
 highlight diffNewFile gui=NONE cterm=NONE
 highlight diffOldFile gui=NONE cterm=NONE
 
-" custom highlight for blink.cmp
+" blink.cmp
 highlight link BlinkCmpKind NONE
 highlight link BlinkCmpLabelMatch Special
+
+" mini.clue
+highlight link MiniClueNextKey Constant
+highlight link MiniClueNextKeyWithPostKeys Keyword
+highlight link MiniClueDescGroup Special
+highlight link MiniClueSeparator WinSeparator
 
 let g:colors_name='zenupright'

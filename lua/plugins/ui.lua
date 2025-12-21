@@ -21,12 +21,12 @@ local function _4_(props)
   local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":~:.")
   local indicator
   if vim.bo[props.buf].modified then
-    indicator = "\226\151\143 "
+    indicator = "\243\176\143\171 "
   elseif vim.bo[props.buf].readonly then
-    indicator = "\243\176\140\190 "
+    indicator = "\243\176\143\175 "
   else
     indicator = ""
   end
   return {indicator, filename}
 end
-return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = 0, horizontal = 0}}, render = _4_}}, {"folke/which-key.nvim", event = "VeryLazy", version = "3", opts = {delay = 200}}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}
+return {_1_, {"b0o/incline.nvim", opts = {hide = {cursorline = true}, window = {margin = {vertical = 0, horizontal = 0}}, render = _4_}}, {"j-hui/fidget.nvim", opts = {notification = {override_vim_notify = true}}}, "kevinhwang91/nvim-bqf"}

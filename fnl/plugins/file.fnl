@@ -1,3 +1,5 @@
+(import-macros {: |} :macros)
+
 [{1 "nvim-neo-tree/neo-tree.nvim"
   :branch "v3.x"
   :dependencies ["nvim-lua/plenary.nvim"
@@ -10,4 +12,7 @@
                       :hijack_netrw_behavior "disabled"}}}
  {1 "stevearc/oil.nvim"
   :dependencies ["nvim-tree/nvim-web-devicons"]
-  :opts {}}]
+  :opts {:keymaps {"<localleader>s" (| :actions.select {:opts {:horizontal true}})
+                   "<localleader>v" (| :actions.select {:opts {:vertical true}})
+                   "<localleader>t" (| :actions.select {:opts {:tab true}})
+                   "<localleader>p" :actions.preview}}}]

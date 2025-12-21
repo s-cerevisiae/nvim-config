@@ -38,15 +38,10 @@
                    (let [filename (-> props.buf
                                       (vim.api.nvim_buf_get_name)
                                       (vim.fn.fnamemodify ":~:."))
-                         indicator (if (. vim.bo props.buf :modified) "● "
-                                       (. vim.bo props.buf :readonly) "󰌾 "
+                         indicator (if (. vim.bo props.buf :modified) "󰏫 "
+                                       (. vim.bo props.buf :readonly) "󰏯 "
                                        "")]
                      [indicator filename]))}}
-
- {1 "folke/which-key.nvim"
-  :event "VeryLazy"
-  :version "3"
-  :opts {:delay 200}}
  {1 "j-hui/fidget.nvim"
   :opts {:notification {:override_vim_notify true}}}
  "kevinhwang91/nvim-bqf"]

@@ -1,9 +1,9 @@
 -- [nfnl] fnl/plugins/term.fnl
 local function _1_(term)
-  local _2_ = term.direction
-  if (_2_ == "horizontal") then
+  local case_2_ = term.direction
+  if (case_2_ == "horizontal") then
     return quotient(vim.o.lines, 4)
-  elseif (_2_ == "vertical") then
+  elseif (case_2_ == "vertical") then
     return quotient(vim.o.columns, 2)
   else
     return nil
@@ -16,4 +16,4 @@ local function _4_()
   end
   return {window = {open = "tab"}, block_for = {fish = true, jjdescription = true}, hooks = {should_block = _5_}}
 end
-return {{"akinsho/toggleterm.nvim", cmd = "ToggleTerm", opts = {size = _1_, float_opts = {border = "curved"}, persist_mode = false}}, {"s-cerevisiae/flatten.nvim", priority = 1000, opts = _4_}}
+return {{"akinsho/toggleterm.nvim", cmd = "ToggleTerm", opts = {size = _1_, persist_mode = false, start_in_insert = false}}, {"s-cerevisiae/flatten.nvim", priority = 1000, opts = _4_}}

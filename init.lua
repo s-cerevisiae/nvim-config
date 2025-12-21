@@ -28,7 +28,7 @@ local function prequire(mod)
   return xpcall(_4_, _5_)
 end
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = "\\"
 require("lazy").setup("plugins")
 prequire("config.options")
 prequire("config.events")

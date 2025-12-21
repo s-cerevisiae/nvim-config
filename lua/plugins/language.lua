@@ -6,7 +6,7 @@ local function _1_()
   vim.lsp.config("racket_langserver", {filetypes = {"racket"}})
   vim.lsp.config("denols", {root_markers = {"deno.json", "deno.jsonc"}})
   vim.lsp.config("basedpyright", {settings = {python = {analysis = {ignore = "*"}}}})
-  return vim.lsp.enable({"racket_langserver", "rust_analyzer", "denols", "ruff", "jdtls", "basedpyright", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
+  return vim.lsp.enable({"racket_langserver", "rust_analyzer", "denols", "ruff", "ty", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
 end
 local function _2_()
   return {capabilities = get_cap(), root_dir = require("lspconfig").util.root_pattern("package.json"), settings = {tsserver_max_memory = 4096}, single_file_support = false}
