@@ -1,7 +1,4 @@
 -- [nfnl] fnl/plugins/language.fnl
-local function get_cap()
-  return require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
-end
 local function _1_()
   vim.lsp.config("racket_langserver", {filetypes = {"racket"}})
   vim.lsp.config("denols", {root_markers = {"deno.json", "deno.jsonc"}})
@@ -9,7 +6,7 @@ local function _1_()
   return vim.lsp.enable({"racket_langserver", "rust_analyzer", "denols", "ruff", "ty", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
 end
 local function _2_()
-  return {capabilities = get_cap(), root_dir = require("lspconfig").util.root_pattern("package.json"), settings = {tsserver_max_memory = 4096}, single_file_support = false}
+  return {settings = {tsserver_max_memory = 4096}, single_file_support = false}
 end
 local function _3_()
   local function _4_()

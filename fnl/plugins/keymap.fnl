@@ -21,6 +21,8 @@
     {:triggers (triggers ["n" "x"]
                  ["<leader>" "g" "`" "'" "\"" "z"]
                  {:mode "n" :keys "<c-w>"}
+                 {:mode "n" :keys "]"}
+                 {:mode "n" :keys "["}
                  {:mode "i" :keys "<c-r>"}
                  {:mode "c" :keys "<c-r>"})
      :clues [(gen_clues.g)
@@ -28,6 +30,7 @@
              (gen_clues.marks)
              (gen_clues.registers)
              (gen_clues.windows {:submode_resize true})
+             (gen_clues.square_brackets)
              (submode ["n"] "<leader>d"
                ["h" "j" "k" "l"])
              (keygroups {:f "file"

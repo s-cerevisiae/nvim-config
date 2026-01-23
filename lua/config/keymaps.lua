@@ -152,19 +152,22 @@ end
 local function _31_()
   return fzf("buffers")
 end
-map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
-local function _32_(layer)
-  local function _33_()
+local function _32_()
+  return fzf("undotree")
+end
+map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"u", _32_, "Undo Tree"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
+local function _33_(layer)
+  local function _34_()
     if not mc.cursorsEnabled() then
       return mc.enableCursors()
     else
       return nil
     end
   end
-  layer("n", "<cr>", _33_)
-  local function _35_()
+  layer("n", "<cr>", _34_)
+  local function _36_()
     return mc.clearCursors()
   end
-  return layer("n", "<c-c>", _35_)
+  return layer("n", "<c-c>", _36_)
 end
-return mc.addKeymapLayer(_32_)
+return mc.addKeymapLayer(_33_)

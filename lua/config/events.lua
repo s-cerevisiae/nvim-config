@@ -26,9 +26,11 @@ end
 local function cursor_line()
   return vim.api.nvim_win_get_cursor(0)[1]
 end
-local tmp_9_ = augroup("RememberTermMode")
+local tmp_9_ = augroup("TermModeTweaks")
 local function _5_()
-  return (vim.cmd.startinsert() and nil)
+  vim.cmd.startinsert()
+  MiniClue.ensure_buf_triggers()
+  return nil
 end
 autocmd_21(tmp_9_, "TermOpen", "term://*", _5_)
 local function _6_()
@@ -40,14 +42,15 @@ local function _7_()
   vim.b.cursor_line_on_leave = cursor_line()
   return nil
 end
-autocmd_21(tmp_9_, "WinLeave", "term://*", _7_)
+autocmd_21(tmp_9_, "BufLeave", "term://*", _7_)
 local function _8_()
-  if (vim.b.cursor_line_on_leave and (vim.b.cursor_line_on_norm == vim.b.cursor_line_on_leave)) then
+  if (not vim.b.cursor_line_on_leave or (vim.b.cursor_line_on_norm == vim.b.cursor_line_on_leave)) then
     vim.cmd.startinsert()
-    return nil
   else
-    return nil
   end
+  vim.b.cursor_line_on_leave = nil
+  vim.b.cursor_line_on_norm = nil
+  return nil
 end
 autocmd_21(tmp_9_, "BufEnter", "term://*", _8_)
 return tmp_9_

@@ -137,6 +137,7 @@
   (map-group "<leader>"
     ["<leader>" #(fzf :commands) "Command Palette"]
     ["b" #(fzf :buffers) "Buffers"]
+    ["u" #(fzf :undotree) "Undo Tree"]
     ["D" toggle-diags "Toggle Diagnostics Style"]
     ["g" "<cmd>Neogit<cr>" "Neogit"]
     ["w" "<c-w>" "window" {:remap true}]

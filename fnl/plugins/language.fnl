@@ -1,10 +1,5 @@
 (import-macros {: dot} :macros)
 
-(fn get-cap []
-  (dot (require :blink.cmp)
-       (get_lsp_capabilities
-         (vim.lsp.protocol.make_client_capabilities))))
-
 [;; Langservers
  {1 "neovim/nvim-lspconfig"
   :config
@@ -34,9 +29,7 @@
   :event "VeryLazy"
   :dependencies ["nvim-lua/plenary.nvim"
                  "neovim/nvim-lspconfig"]
-  :opts #{:capabilities (get-cap)
-          :root_dir (dot (require :lspconfig) util (root_pattern "package.json"))
-          :single_file_support false
+  :opts #{:single_file_support false
           :settings {:tsserver_max_memory 4096}}}
  "mfussenegger/nvim-jdtls"
 
