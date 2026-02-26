@@ -43,6 +43,23 @@
 (vim.keymap.set ["o"] "r"
   #(dot (require :flash) (remote)))
 
+;; nvim-surround
+(do
+  (fn map-surround [mode key value]
+    (vim.keymap.set mode key (.. "<Plug>(nvim-surround-" value ")")))
+  (doto "n"
+    (map-surround "s" "normal")
+    (map-surround "ss" "normal-cur")
+    (map-surround "S" "normal-line")
+    (map-surround "SS" "normal-cur-line")
+    (map-surround "ds" "delete")
+    (map-surround "cs" "change")
+    (map-surround "cS" "change-line"))
+
+  (doto "x"
+    (map-surround "s" "visual")
+    (map-surround "S" "visual-line")))
+
 ;; tree-sitter text objects
 (let [select (autoload :nvim-treesitter-textobjects.select)
       mode ["x" "o"]]

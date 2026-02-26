@@ -1,6 +1,5 @@
 [{1 "saghen/blink.cmp"
   :version "*"
-  :event ["InsertEnter" "CmdlineEnter"]
   :opts
   {:keymap {:preset "enter"
             "<Tab>" ["select_next" "fallback"]

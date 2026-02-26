@@ -35,6 +35,22 @@ local function _8_()
 end
 vim.keymap.set({"o"}, "r", _8_)
 do
+  local function map_surround(mode, key, value)
+    return vim.keymap.set(mode, key, ("<Plug>(nvim-surround-" .. value .. ")"))
+  end
+  do
+    map_surround("n", "s", "normal")
+    map_surround("n", "ss", "normal-cur")
+    map_surround("n", "S", "normal-line")
+    map_surround("n", "SS", "normal-cur-line")
+    map_surround("n", "ds", "delete")
+    map_surround("n", "cs", "change")
+    map_surround("n", "cS", "change-line")
+  end
+  map_surround("x", "s", "visual")
+  map_surround("x", "S", "visual-line")
+end
+do
   local select = autoload("nvim-treesitter-textobjects.select")
   local mode = {"x", "o"}
   local function map_ts(key, sel)

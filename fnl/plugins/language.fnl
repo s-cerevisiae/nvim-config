@@ -11,7 +11,6 @@
          {:settings {:python {:analysis {:ignore "*"}}}})
        (vim.lsp.enable
          ["racket_langserver"
-          "rust_analyzer"
           ;; use workspace_required in the future
           "denols"
           ;; ruff is no longer a hover provider
@@ -34,6 +33,7 @@
  "mfussenegger/nvim-jdtls"
 
  ;; Language plugins
+ "mrcjkb/rustaceanvim"
  "wlangstroth/vim-racket"
  "LnL7/vim-nix"
  "bakpakin/fennel.vim"

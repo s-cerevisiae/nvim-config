@@ -1,14 +1,18 @@
 (local {: augroup : autocmd!} (require :utils))
 
-;; Aggregated trivial ftplugin configs
-
+;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")
   (autocmd! "Filetype"
             ["javascript" "typescript" "css"
              "javascriptreact" "typescriptreact"
              "ocaml" "prolog" "scheme" "lua"]
-     #(do (set vim.bo.tabstop 2)
-          (set vim.bo.shiftwidth 2))))
+    #(do (set vim.bo.tabstop 2)
+         (set vim.bo.shiftwidth 2)))
+  (autocmd! "Filetype" "rust"
+    #(do (vim.keymap.set "n" "K"
+           #(vim.cmd.RustLsp "hover" "actions")
+           {:silent true :buffer 0})
+         nil)))
 
 ;; Evaluate "*.data.clj" and write the output to file
 

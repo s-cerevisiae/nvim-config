@@ -3,7 +3,7 @@ local function _1_()
   vim.lsp.config("racket_langserver", {filetypes = {"racket"}})
   vim.lsp.config("denols", {root_markers = {"deno.json", "deno.jsonc"}})
   vim.lsp.config("basedpyright", {settings = {python = {analysis = {ignore = "*"}}}})
-  return vim.lsp.enable({"racket_langserver", "rust_analyzer", "denols", "ruff", "ty", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
+  return vim.lsp.enable({"racket_langserver", "denols", "ruff", "ty", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
 end
 local function _2_()
   return {settings = {tsserver_max_memory = 4096}, single_file_support = false}
@@ -47,4 +47,4 @@ do
   end
   _6_ = {formatters_by_ft = vim.tbl_extend("keep", _7_, _9_, {python = {"ruff_format"}})}
 end
-return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = "VeryLazy", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mfussenegger/nvim-jdtls", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", main = "iron.core", opts = _3_}, {"mickael-menu/zk-nvim", main = "zk", opts = {picker = "fzf_lua"}}, {"MeanderingProgrammer/render-markdown.nvim", cmd = "RenderMarkdown", config = true}, {"stevearc/conform.nvim", opts = _6_}}
+return {{"neovim/nvim-lspconfig", config = _1_}, {"pmizio/typescript-tools.nvim", event = "VeryLazy", dependencies = {"nvim-lua/plenary.nvim", "neovim/nvim-lspconfig"}, opts = _2_}, "mfussenegger/nvim-jdtls", "mrcjkb/rustaceanvim", "wlangstroth/vim-racket", "LnL7/vim-nix", "bakpakin/fennel.vim", "kaarmu/typst.vim", {"Vigemus/iron.nvim", cmd = "IronRepl", main = "iron.core", opts = _3_}, {"mickael-menu/zk-nvim", main = "zk", opts = {picker = "fzf_lua"}}, {"MeanderingProgrammer/render-markdown.nvim", cmd = "RenderMarkdown", config = true}, {"stevearc/conform.nvim", opts = _6_}}

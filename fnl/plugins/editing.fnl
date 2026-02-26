@@ -4,12 +4,7 @@
          :prompt {:enabled true
                   :prefix [["r/" "FlashPromptIcon"]]}}}
  {1 "kylechui/nvim-surround"
-  :opts {:keymaps {:normal "s"
-                   :normal_cur "ss"
-                   :normal_line "S"
-                   :normal_cur_line "SS"
-                   :visual "s"
-                   :visual_line "S"}}}
+  :init #(set vim.g.nvim_surround_no_mappings true)}
  {1 "jake-stewart/multicursor.nvim"
   :config true}
  {1 "nvim-mini/mini.align"
