@@ -15,7 +15,7 @@
           "denols"
           ;; ruff is no longer a hover provider
           "ruff"
-          "ty"
+          "pyrefly"
           "jdtls"
           ;; single file support is enabled by default
           "tinymist"

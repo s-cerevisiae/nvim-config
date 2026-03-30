@@ -1,6 +1,6 @@
 (import-macros {: dot} :macros)
 
-(local {: augroup : autocmd!} (require :utils))
+(local {: augroup : autocmd} (require :utils))
 
 [{1 "nvim-treesitter/nvim-treesitter"
   :branch "main"
@@ -16,7 +16,7 @@
                          (: :flatten)
                          (: :totable))]
        (if (not (vim.tbl_isempty filetypes))
-         (autocmd! (augroup "NvimTreesitterCfg")
+         (autocmd (augroup "NvimTreesitterCfg")
            "FileType" filetypes
            #(do (vim.treesitter.start)
                 (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()"))))))}

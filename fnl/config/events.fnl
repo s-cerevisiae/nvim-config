@@ -1,28 +1,28 @@
-(local {: augroup : autocmd!} (require :utils))
+(local {: augroup : autocmd} (require :utils))
 
 ;; highlight on yank
 (doto (augroup "YankHighlight")
-  (autocmd! "TextYankPost" "*" #(vim.highlight.on_yank)))
+  (autocmd "TextYankPost" "*" #(vim.highlight.on_yank)))
 
 (doto (augroup "DocumentHighlight")
   ;; highlight is manually triggered
-  (autocmd! ["CursorMoved" "InsertEnter"] "*" #(vim.lsp.buf.clear_references)))
+  (autocmd ["CursorMoved" "InsertEnter"] "*" #(vim.lsp.buf.clear_references)))
 
 (doto (augroup "AutoQuickFix")
-  (autocmd! "QuickFixCmdPost" "grep" #(and (vim.cmd :cwindow) nil)))
+  (autocmd "QuickFixCmdPost" "grep" #(and (vim.cmd :cwindow) nil)))
 
 (fn cursor-line []
   (-> (vim.api.nvim_win_get_cursor 0) (. 1)))
 (doto (augroup "TermModeTweaks")
-  (autocmd! "TermOpen" "term://*"
+  (autocmd "TermOpen" "term://*"
     #(do (vim.cmd.startinsert)
          (MiniClue.ensure_buf_triggers)
          nil))
-  (autocmd! "TermLeave" "term://*"
+  (autocmd "TermLeave" "term://*"
     #(set vim.b.cursor_line_on_norm (cursor-line)))
-  (autocmd! "BufLeave" "term://*"
+  (autocmd "BufLeave" "term://*"
     #(set vim.b.cursor_line_on_leave (cursor-line)))
-  (autocmd! "BufEnter" "term://*"
+  (autocmd "BufEnter" "term://*"
     (fn []
       ;; left term with cursor unmoved after leaving term mode: term
       ;; left term with cursor moved: normal

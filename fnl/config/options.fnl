@@ -1,4 +1,4 @@
-(local {: augroup : autocmd!} (require :utils))
+(local {: augroup : autocmd} (require :utils))
 
 (fn set-options [options]
   (each [opt val (pairs options)]
@@ -67,4 +67,4 @@
     (set vim.wo.scrolloff (quotient height 5))))
 
 (doto (augroup "SetScrollOff")
-  (autocmd! ["BufEnter" "WinEnter" "VimResized"] "*" set-scrolloff))
+  (autocmd ["BufEnter" "WinEnter" "VimResized"] "*" set-scrolloff))

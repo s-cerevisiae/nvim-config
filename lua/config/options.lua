@@ -1,7 +1,7 @@
 -- [nfnl] fnl/config/options.fnl
 local _local_1_ = require("utils")
-local augroup = _local_1_["augroup"]
-local autocmd_21 = _local_1_["autocmd!"]
+local augroup = _local_1_.augroup
+local autocmd = _local_1_.autocmd
 local function set_options(options)
   for opt, val in pairs(options) do
     vim.o[opt] = val
@@ -17,5 +17,5 @@ local function set_scrolloff()
   return nil
 end
 local tmp_9_ = augroup("SetScrollOff")
-autocmd_21(tmp_9_, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
+autocmd(tmp_9_, {"BufEnter", "WinEnter", "VimResized"}, "*", set_scrolloff)
 return tmp_9_

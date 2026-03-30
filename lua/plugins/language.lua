@@ -3,7 +3,7 @@ local function _1_()
   vim.lsp.config("racket_langserver", {filetypes = {"racket"}})
   vim.lsp.config("denols", {root_markers = {"deno.json", "deno.jsonc"}})
   vim.lsp.config("basedpyright", {settings = {python = {analysis = {ignore = "*"}}}})
-  return vim.lsp.enable({"racket_langserver", "denols", "ruff", "ty", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
+  return vim.lsp.enable({"racket_langserver", "denols", "ruff", "pyrefly", "jdtls", "tinymist", "clangd", "ocamllsp", "hls", "nil_ls", "rescriptls"})
 end
 local function _2_()
   return {settings = {tsserver_max_memory = 4096}, single_file_support = false}

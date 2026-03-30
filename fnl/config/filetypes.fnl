@@ -1,14 +1,14 @@
-(local {: augroup : autocmd!} (require :utils))
+(local {: augroup : autocmd} (require :utils))
 
 ;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")
-  (autocmd! "Filetype"
+  (autocmd "Filetype"
             ["javascript" "typescript" "css"
              "javascriptreact" "typescriptreact"
              "ocaml" "prolog" "scheme" "lua"]
     #(do (set vim.bo.tabstop 2)
          (set vim.bo.shiftwidth 2)))
-  (autocmd! "Filetype" "rust"
+  (autocmd "Filetype" "rust"
     #(do (vim.keymap.set "n" "K"
            #(vim.cmd.RustLsp "hover" "actions")
            {:silent true :buffer 0})
@@ -26,7 +26,7 @@
               (: :close))))))
 
 (doto (augroup "DataClj")
-  (autocmd! "BufWritePost" "*.data.clj"
+  (autocmd "BufWritePost" "*.data.clj"
     (fn [{: buf}]
       (write-data-clj buf)
       nil)))
