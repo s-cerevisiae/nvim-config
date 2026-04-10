@@ -23,34 +23,22 @@ do
   end
   autocmd(tmp_9_, "QuickFixCmdPost", "grep", _4_)
 end
-local function cursor_line()
-  return vim.api.nvim_win_get_cursor(0)[1]
-end
-local tmp_9_ = augroup("TermModeTweaks")
-local function _5_()
-  vim.cmd.startinsert()
-  MiniClue.ensure_buf_triggers()
-  return nil
-end
-autocmd(tmp_9_, "TermOpen", "term://*", _5_)
-local function _6_()
-  vim.b.cursor_line_on_norm = cursor_line()
-  return nil
-end
-autocmd(tmp_9_, "TermLeave", "term://*", _6_)
-local function _7_()
-  vim.b.cursor_line_on_leave = cursor_line()
-  return nil
-end
-autocmd(tmp_9_, "BufLeave", "term://*", _7_)
-local function _8_()
-  if (not vim.b.cursor_line_on_leave or (vim.b.cursor_line_on_norm == vim.b.cursor_line_on_leave)) then
-    vim.cmd.startinsert()
+local function _9_(_5_)
+  local _arg_6_ = _5_.data
+  local _arg_7_ = _arg_6_.params
+  local _arg_8_ = _arg_7_.value
+  local title = _arg_8_.title
+  local message = _arg_8_.message
+  local kind = _arg_8_.kind
+  local percentage = _arg_8_.percentage
+  local client_id = _arg_6_.client_id
+  local _10_
+  if (kind ~= "end") then
+    _10_ = "running"
   else
+    _10_ = "success"
   end
-  vim.b.cursor_line_on_leave = nil
-  vim.b.cursor_line_on_norm = nil
+  vim.api.nvim_echo({{(message or "done")}}, false, {id = ("lsp." .. client_id .. "." .. title), kind = "progress", source = "vim.lsp", title = title, status = _10_, percent = percentage})
   return nil
 end
-autocmd(tmp_9_, "BufEnter", "term://*", _8_)
-return tmp_9_
+return autocmd(augroup("LspProg"), "LspProgress", "*", _9_)

@@ -1,0 +1,10 @@
+(import-macros {: dot} :macros)
+
+(dot (require :blink.cmp)
+     (setup {:keymap {:preset "enter"
+                      "<Tab>" ["select_next" "fallback"]
+                      "<S-Tab>" ["select_prev" "fallback"]}
+             :cmdline {:keymap {:preset "inherit"
+                                "<Tab>" ["show_and_insert" "select_next"]
+                                "<S-Tab>" ["show_and_insert" "select_prev"]}}
+             :completion {:list {:selection {:preselect false}}}}))

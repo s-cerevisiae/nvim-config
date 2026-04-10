@@ -1,3 +1,4 @@
+(import-macros {: dot} :macros)
 (local {: augroup : autocmd} (require :utils))
 
 (fn set-options [options]
@@ -10,6 +11,8 @@
   :relativenumber true
   :numberwidth 3
   :signcolumn "number"
+
+  :cmdheight 0
 
   :cursorline true
 
@@ -40,6 +43,8 @@
 
   ;; Disable tabline
   :showtabline 0
+  ;; Global statusline
+  :laststatus 3
 
   ;; Disable "--INSERT--" and alike
   :showmode false

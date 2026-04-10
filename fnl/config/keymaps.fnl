@@ -95,6 +95,7 @@
 
 (map-group "<leader>l"
   ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
+  ["c" vim.lsp.codelens.run "Codelens"]
   ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
   ["D" #(fzf :diagnostics_workspace {:sort true}) "Workspace Diagnostics"]
   ["f" #(dot (require :conform)
@@ -166,3 +167,45 @@
      (layer "n" "<cr>" #(when (not (mc.cursorsEnabled))
                           (mc.enableCursors)))
      (layer "n" "<c-c>" #(mc.clearCursors)))))
+
+(macro triggers [modes keys & rest]
+  (each [_ m (ipairs modes)]
+    (each [_ k (ipairs keys)]
+      (table.insert rest {:mode m :keys k})))
+  rest)
+
+(macro submode [modes prefix keys]
+  (local clues [])
+  (each [_ m (ipairs modes)]
+    (each [_ k (ipairs keys)]
+      (table.insert clues {:mode m :keys (.. prefix k) :postkeys prefix})))
+  clues)
+
+(macro keygroups [groups]
+  (icollect [k v (pairs groups)]
+    {:mode "n" :keys (.. "<leader>" k) :desc v}))
+
+(let [{: setup : gen_clues} (require :mini.clue)]
+  (setup {:triggers (triggers ["n" "x"]
+                      ["<leader>" "g" "`" "'" "\"" "z"]
+                      {:mode "n" :keys "<c-w>"}
+                      {:mode "n" :keys "]"}
+                      {:mode "n" :keys "["}
+                      {:mode "i" :keys "<c-r>"}
+                      {:mode "c" :keys "<c-r>"})
+          :clues [(gen_clues.g)
+                  (gen_clues.z)
+                  (gen_clues.marks)
+                  (gen_clues.registers)
+                  (gen_clues.windows {:submode_resize true})
+                  (gen_clues.square_brackets)
+                  (submode ["n"] "<leader>d"
+                    ["h" "j" "k" "l"])
+                  (keygroups {:f "file"
+                              :l "lang"
+                              :lg "goto"
+                              :d "debug"
+                              :t "term"
+                              :r "repl"})]
+          :window {:config {:width "auto"
+                            :border "none"}}}))

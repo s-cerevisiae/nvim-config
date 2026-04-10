@@ -1,42 +1,37 @@
 -- [nfnl] init.fnl
 vim.loader.enable()
-local function bootstrap(plugin)
-  local _let_1_ = vim.split(plugin, "/")
-  local _ = _let_1_[1]
-  local name = _let_1_[2]
-  local plugin_path = (vim.fn.stdpath("data") .. "/lazy/" .. name)
-  if not vim.loop.fs_stat(plugin_path) then
-    vim.notify(("Installing " .. plugin .. " to " .. plugin_path), vim.log.levels.INFO)
-    vim.fn.system({"git", "clone", "--filter=blob:none", "--single-branch", ("https://github.com/" .. plugin), plugin_path})
-  else
-  end
-  return vim.opt.runtimepath:prepend(plugin_path)
-end
-bootstrap("folke/lazy.nvim")
-local function _3_(_241, _242)
+require("vim._core.ui2").enable({enable = true, msg = {targets = "msg", msg = {timeout = 1500}}})
+local function _1_(_241, _242)
   return math.floor((_241 / _242))
 end
-_G.quotient = _3_
+_G.quotient = _1_
 local function prequire(mod)
-  local function _4_()
+  local function _2_()
     return require(mod)
   end
-  local function _5_(_241)
+  local function _3_(_241)
     print("Failed to require module", mod)
     return print(_241)
   end
-  return xpcall(_4_, _5_)
+  return xpcall(_2_, _3_)
 end
+prequire("config.flatten")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-require("lazy").setup("plugins")
+prequire("plugins")
 prequire("config.options")
+prequire("config.ui")
+prequire("config.file")
+prequire("config.editing")
+prequire("config.completion")
+prequire("config.language")
+prequire("config.term")
+prequire("config.git")
 prequire("config.events")
-prequire("config.filetypes")
 prequire("config.commands")
 prequire("config.diagnostics")
 prequire("config.keymaps")
-local function _6_()
+local function _4_()
   return require("environmental")
 end
-return pcall(_6_)
+return pcall(_4_)

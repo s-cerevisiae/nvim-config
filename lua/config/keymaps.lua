@@ -103,7 +103,7 @@ end
 local function _15_()
   return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
-map_group("<leader>l", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format Buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle Inlay Hint"})
+map_group("<leader>l", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"c", vim.lsp.codelens.run, "Codelens"}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format Buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle Inlay Hint"})
 map_group("<leader>lg", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
 map_group("<leader>t", {"t", "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal"}, {"l", "<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 Terminal"}, {"j", "<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
 do
@@ -153,37 +153,43 @@ do
   end
   map_group("<leader>d", {"d", _21_, "Run / Continue"}, {"b", _22_, "Toggle Breakpoint"}, {"j", _23_, "Step Over"}, {"h", _24_, "Step Into"}, {"l", _25_, "Step Out"}, {"k", _26_, "Step Back"}, {"q", _27_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
 end
-local toggle_diags
-local function _28_()
-  local _let_29_ = vim.diagnostic.config()
-  local virtual_text = _let_29_.virtual_text
-  local virtual_lines = _let_29_.virtual_lines
-  return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
-end
-toggle_diags = _28_
-local mc = require("multicursor-nvim")
-local function _30_()
-  return fzf("commands")
-end
-local function _31_()
-  return fzf("buffers")
-end
-local function _32_()
-  return fzf("undotree")
-end
-map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"u", _32_, "Undo Tree"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
-local function _33_(layer)
-  local function _34_()
-    if not mc.cursorsEnabled() then
-      return mc.enableCursors()
-    else
-      return nil
+do
+  local toggle_diags
+  local function _28_()
+    local _let_29_ = vim.diagnostic.config()
+    local virtual_text = _let_29_.virtual_text
+    local virtual_lines = _let_29_.virtual_lines
+    return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
+  end
+  toggle_diags = _28_
+  local mc = require("multicursor-nvim")
+  local function _30_()
+    return fzf("commands")
+  end
+  local function _31_()
+    return fzf("buffers")
+  end
+  local function _32_()
+    return fzf("undotree")
+  end
+  map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"u", _32_, "Undo Tree"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
+  local function _33_(layer)
+    local function _34_()
+      if not mc.cursorsEnabled() then
+        return mc.enableCursors()
+      else
+        return nil
+      end
     end
+    layer("n", "<cr>", _34_)
+    local function _36_()
+      return mc.clearCursors()
+    end
+    return layer("n", "<c-c>", _36_)
   end
-  layer("n", "<cr>", _34_)
-  local function _36_()
-    return mc.clearCursors()
-  end
-  return layer("n", "<c-c>", _36_)
+  mc.addKeymapLayer(_33_)
 end
-return mc.addKeymapLayer(_33_)
+local _let_37_ = require("mini.clue")
+local setup = _let_37_.setup
+local gen_clues = _let_37_.gen_clues
+return setup({triggers = {{mode = "n", keys = "<c-w>"}, {mode = "n", keys = "]"}, {mode = "n", keys = "["}, {mode = "i", keys = "<c-r>"}, {mode = "c", keys = "<c-r>"}, {keys = "<leader>", mode = "n"}, {keys = "g", mode = "n"}, {keys = "`", mode = "n"}, {keys = "'", mode = "n"}, {keys = "\"", mode = "n"}, {keys = "z", mode = "n"}, {keys = "<leader>", mode = "x"}, {keys = "g", mode = "x"}, {keys = "`", mode = "x"}, {keys = "'", mode = "x"}, {keys = "\"", mode = "x"}, {keys = "z", mode = "x"}}, clues = {gen_clues.g(), gen_clues.z(), gen_clues.marks(), gen_clues.registers(), gen_clues.windows({submode_resize = true}), gen_clues.square_brackets(), {{keys = "<leader>dh", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dj", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dk", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dl", mode = "n", postkeys = "<leader>d"}}, {{desc = "file", keys = "<leader>f", mode = "n"}, {desc = "lang", keys = "<leader>l", mode = "n"}, {desc = "goto", keys = "<leader>lg", mode = "n"}, {desc = "debug", keys = "<leader>d", mode = "n"}, {desc = "term", keys = "<leader>t", mode = "n"}, {desc = "repl", keys = "<leader>r", mode = "n"}}}, window = {config = {width = "auto", border = "none"}}})
