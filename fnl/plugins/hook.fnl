@@ -2,9 +2,8 @@
 
 (local hooks {:install {} :update {} :delete {}})
 
-(fn run [name kind]
-  (let [[{: active : path}] (vim.pack.get [name] {:info false})
-        maybe-hook (. hooks kind name)]
+(fn run [{: name : kind : active : path}]
+  (let [maybe-hook (. hooks kind name)]
     (if maybe-hook
         (do (when (not active)
               (vim.cmd.packadd name))
@@ -22,15 +21,16 @@
 
 (doto (augroup "PackHook")
   (autocmd "VimEnter" "*"
-    #(do (each [_ {: name : kind} (ipairs pending-events)]
-           (run name kind))
+    #(do (each [_ args (ipairs pending-events)]
+           (run args))
          (set pending-events nil)))
   (autocmd
     "PackChanged" "*"
-    (fn [{:data {:spec {: name} : kind}}]
+    (fn [{:data {:spec {: name} : kind : active : path}}]
+      (local args {: name : kind : active : path})
       (if pending-events
-          (table.insert pending-events {: name : kind})
-          (run name kind))
+          (table.insert pending-events args)
+          (run args))
       nil)))
 
 (set _G.PackHook

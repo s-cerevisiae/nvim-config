@@ -12,8 +12,9 @@
 
 (vim.api.nvim_create_user_command "PackRunHook"
   (fn [{:fargs [kind name]}]
-    (when (not (PackHook.run name kind))
-      (vim.notify (.. "No " kind " hook available for plugin " name))))
+    (let [[{: active : path}] (vim.pack.get [name] {:info false})]
+      (when (not (PackHook.run {: name : kind : active : path}))
+        (vim.notify (.. "No " kind " hook available for plugin " name)))))
   {:nargs "+"
    :complete (fn [_ cmdline _]
                (let [hooks (PackHook.get)]

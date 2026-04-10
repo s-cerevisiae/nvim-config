@@ -60,7 +60,6 @@ do
   else
   end
 end
-require("dap-view").setup({})
 do
   local tmp_9_ = augroup("FileTypeMisc")
   local function _10_()

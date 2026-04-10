@@ -70,8 +70,6 @@
         #(do (vim.treesitter.start)
              (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()"))))))
 
-(dot (require :dap-view) (setup {}))
-
 ;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")
   (autocmd "Filetype"
