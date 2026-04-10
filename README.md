@@ -8,9 +8,10 @@
 
 ### Requirements
 
+- Neovim ≥ 0.12.1
 - Rust toolchain (for parinfer)
 - C compiler (for tree-sitter parsers)
-- tree-sitter CLI (for tree-sitter parsers, it fails silently without this)
+- tree-sitter CLI (for tree-sitter parsers)
 - git
 - ripgrep
 - fd
