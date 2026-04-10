@@ -1,37 +1,7 @@
-(local {: autocmd : augroup} (require :utils))
+(local hook! PackHook.create)
 
 (fn github [repo]
   (.. "https://github.com/" repo))
-
-(local hooks {:install {} :update {} :delete {}})
-
-(fn hook! [kinds name hook]
-  (each [_ kind (ipairs kinds)]
-    (set (. hooks kind name) hook)))
-
-(autocmd (augroup "PackHook")
-  "PackChanged" "*"
-  (fn [ev]
-    (let [{:spec {: name} : active : kind : path} ev.data
-          maybe-hook (. hooks kind name)]
-      (when maybe-hook
-        (when (not active)
-          (vim.cmd.packadd name))
-        (vim.notify (.. "Running " kind " hook for package " name)
-                    vim.log.levels.INFO)
-        (maybe-hook path)))
-    nil))
-
-(set _G.Pack
-  {:run_hook (fn [name kind]
-               (let [[{: active : path}] (vim.pack.get [name] {:info false})
-                     maybe-hook (. hooks kind name)]
-                 (if maybe-hook
-                     (do (when (not active)
-                           (vim.cmd.packadd name))
-                         (maybe-hook path))
-                     (vim.notify (.. "No " kind " hook available for plugin " name)))))
-   :get_hooks #hooks})
 
 (vim.pack.add
   [;; Colorscheme

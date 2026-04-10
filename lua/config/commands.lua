@@ -15,14 +15,18 @@ local function _6_(_4_)
   local _arg_5_ = _4_.fargs
   local kind = _arg_5_[1]
   local name = _arg_5_[2]
-  return Pack.run_hook(name, kind)
+  if not PackHook.run(name, kind) then
+    return vim.notify(("No " .. kind .. " hook available for plugin " .. name))
+  else
+    return nil
+  end
 end
-local function _7_(_, cmdline, _0)
-  local hooks = Pack.get_hooks()
-  local case_8_ = vim.split(cmdline, " ", {trimempty = true})
-  if ((_G.type(case_8_) == "table") and (nil ~= case_8_[1]) and (nil ~= case_8_[2])) then
-    local cmd = case_8_[1]
-    local kind = case_8_[2]
+local function _8_(_, cmdline, _0)
+  local hooks = PackHook.get()
+  local case_9_ = vim.split(cmdline, " ", {trimempty = true})
+  if ((_G.type(case_9_) == "table") and (nil ~= case_9_[1]) and (nil ~= case_9_[2])) then
+    local cmd = case_9_[1]
+    local kind = case_9_[2]
     if (nil ~= hooks) then
       local tmp_3_ = hooks[kind]
       if (nil ~= tmp_3_) then
@@ -33,17 +37,17 @@ local function _7_(_, cmdline, _0)
     else
       return nil
     end
-  elseif ((_G.type(case_8_) == "table") and (nil ~= case_8_[1])) then
-    local cmd = case_8_[1]
+  elseif ((_G.type(case_9_) == "table") and (nil ~= case_9_[1])) then
+    local cmd = case_9_[1]
     return vim.tbl_keys(hooks)
   else
-    local _1 = case_8_
+    local _1 = case_9_
     return {}
   end
 end
-vim.api.nvim_create_user_command("PackRunHook", _6_, {nargs = "+", complete = _7_})
-local function _12_()
-  local function _13_()
+vim.api.nvim_create_user_command("PackRunHook", _6_, {nargs = "+", complete = _8_})
+local function _13_()
+  local function _14_()
     local tbl_26_ = {}
     local i_27_ = 0
     for _, p in ipairs(vim.pack.get(nil, {info = false})) do
@@ -61,6 +65,6 @@ local function _12_()
     end
     return tbl_26_
   end
-  return vim.pack.del(_13_())
+  return vim.pack.del(_14_())
 end
-return vim.api.nvim_create_user_command("PackClean", _12_, {nargs = 0})
+return vim.api.nvim_create_user_command("PackClean", _13_, {nargs = 0})

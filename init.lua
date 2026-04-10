@@ -15,9 +15,8 @@ local function prequire(mod)
   end
   return xpcall(_2_, _3_)
 end
+prequire("plugins.hook")
 prequire("config.flatten")
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
 prequire("plugins")
 prequire("config.options")
 prequire("config.ui")

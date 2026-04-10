@@ -15,10 +15,8 @@
     #(do (print "Failed to require module" mod)
          (print $1))))
 
+(prequire :plugins.hook)
 (prequire :config.flatten)
-
-(set vim.g.mapleader " ")
-(set vim.g.maplocalleader "\\")
 
 (prequire :plugins)
 (prequire :config.options)

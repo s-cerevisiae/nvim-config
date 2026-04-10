@@ -12,10 +12,11 @@
 
 (vim.api.nvim_create_user_command "PackRunHook"
   (fn [{:fargs [kind name]}]
-    (Pack.run_hook name kind))
+    (when (not (PackHook.run name kind))
+      (vim.notify (.. "No " kind " hook available for plugin " name))))
   {:nargs "+"
    :complete (fn [_ cmdline _]
-               (let [hooks (Pack.get_hooks)]
+               (let [hooks (PackHook.get)]
                  (case (vim.split cmdline " " {:trimempty true})
                    [cmd kind] (-?> hooks (. kind) (vim.tbl_keys))
                    [cmd] (vim.tbl_keys hooks)
