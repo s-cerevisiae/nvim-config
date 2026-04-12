@@ -83,17 +83,20 @@
     (set opts.desc desc)
     (vim.keymap.set mode key val opts)))
 
-(fn map-group [prefix & group]
+(local key-groups [])
+
+(fn map-group [prefix desc & group]
+  (table.insert key-groups {:mode "n" :keys prefix : desc})
   (each [_ m (ipairs group)]
     (set (. m 1) (.. prefix (. m 1)))
     (map (unpack m))))
 
-(map-group "<leader>f"
+(map-group "<leader>f" "file"
   ["f" #(fzf :files) "File Finder"]
   ["b" "<cmd>Oil<cr>" "File Browser"]
   ["t" "<cmd>Neotree toggle reveal=true position=current<cr>" "File Tree"])
 
-(map-group "<leader>l"
+(map-group "<leader>l" "lang"
   ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
   ["c" vim.lsp.codelens.run "Codelens"]
   ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
@@ -110,23 +113,28 @@
           (not (vim.lsp.inlay_hint.is_enabled)))
        "Toggle Inlay Hint"])
 
-(map-group "<leader>lg"
+(map-group "<leader>lg" "goto"
   ["i" vim.lsp.buf.implementation "Go to Implementation"]
   ["d" vim.lsp.buf.definition "Go to Definition"]
   ["D" vim.lsp.buf.declaration "Go to Declaration"]
   ["t" vim.lsp.buf.type_definition "Go to Type Definition"]
   ["r" vim.lsp.buf.references "Go to References"])
 
-(map-group "<leader>t"
-  ["t" "<cmd>ToggleTerm direction=float<cr>" "Toggle Floating Terminal"]
-  ["l" "<cmd>ToggleTerm direction=vertical<cr>" "Toggle → Terminal"]
-  ["j" "<cmd>ToggleTerm direction=horizontal<cr>" "Toggle ↓ Terminal"]
-  ["s" "<cmd>TermSelect<cr>" "Select Terminal"])
+(let [toggle-term (fn [direction]
+                    #(let [count vim.v.count]
+                       (dot (require :toggleterm)
+                            (toggle count nil nil direction
+                                    (if (> count 1) (tostring count))))))]
+  (map-group "<leader>t" "term"
+    ["t" (toggle-term "float") "Toggle Floating Terminal"]
+    ["l" (toggle-term "vertical") "Toggle → Terminal"]
+    ["j" (toggle-term "horizontal") "Toggle ↓ Terminal"]
+    ["s" "<cmd>TermSelect<cr>" "Select Terminal"]))
 
 (let [iron (autoload :iron.core)
       send-visual #(do (iron.mark_visual)
                        (iron.send_mark))]
-  (map-group "<leader>r"
+  (map-group "<leader>r" "repl"
     ["r" send-visual "Send visual selection" {:mode "v"}]
     ["r" #(iron.run_motion "send_motion") "Send motion" {:mode "n"}]
     ["t" "<cmd>IronRepl<cr>" "Toggle REPL"]
@@ -135,7 +143,7 @@
     ["m" #(iron.send_mark) "Send marked"]))
 
 (let [dap (autoload :dap)]
-  (map-group "<leader>d"
+  (map-group "<leader>d" "debug"
     ["d" #(dap.continue) "Run / Continue"]
     ["b" #(dap.toggle_breakpoint) "Toggle Breakpoint"]
     ["j" #(dap.step_over) "Step Over"]
@@ -152,7 +160,7 @@
                         {:virtual_text (not virtual_text)
                          :virtual_lines (not virtual_lines)}))
       mc (require :multicursor-nvim)]
-  (map-group "<leader>"
+  (map-group "<leader>" "menu"
     ["<leader>" #(fzf :commands) "Command Palette"]
     ["b" #(fzf :buffers) "Buffers"]
     ["u" #(fzf :undotree) "Undo Tree"]
@@ -181,10 +189,6 @@
       (table.insert clues {:mode m :keys (.. prefix k) :postkeys prefix})))
   clues)
 
-(macro keygroups [groups]
-  (icollect [k v (pairs groups)]
-    {:mode "n" :keys (.. "<leader>" k) :desc v}))
-
 (let [{: setup : gen_clues} (require :mini.clue)]
   (setup {:triggers (triggers ["n" "x"]
                       ["<leader>" "g" "`" "'" "\"" "z"]
@@ -201,11 +205,6 @@
                   (gen_clues.square_brackets)
                   (submode ["n"] "<leader>d"
                     ["h" "j" "k" "l"])
-                  (keygroups {:f "file"
-                              :l "lang"
-                              :lg "goto"
-                              :d "debug"
-                              :t "term"
-                              :r "repl"})]
+                  key-groups]
           :window {:config {:width "auto"
                             :border "none"}}}))

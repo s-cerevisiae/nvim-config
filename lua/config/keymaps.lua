@@ -76,8 +76,10 @@ local function map(key, val, desc, opts)
   opts0.desc = desc
   return vim.keymap.set(mode, key, val, opts0)
 end
-local function map_group(prefix, ...)
+local key_groups = {}
+local function map_group(prefix, desc, ...)
   local group = {...}
+  table.insert(key_groups, {mode = "n", keys = prefix, desc = desc})
   for _, m in ipairs(group) do
     m[1] = (prefix .. m[1])
     map(unpack(m))
@@ -87,7 +89,7 @@ end
 local function _10_()
   return fzf("files")
 end
-map_group("<leader>f", {"f", _10_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
+map_group("<leader>f", "file", {"f", _10_, "File Finder"}, {"b", "<cmd>Oil<cr>", "File Browser"}, {"t", "<cmd>Neotree toggle reveal=true position=current<cr>", "File Tree"})
 local function _11_()
   return fzf("lsp_code_actions")
 end
@@ -103,93 +105,111 @@ end
 local function _15_()
   return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
-map_group("<leader>l", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"c", vim.lsp.codelens.run, "Codelens"}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format Buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle Inlay Hint"})
-map_group("<leader>lg", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
-map_group("<leader>t", {"t", "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal"}, {"l", "<cmd>ToggleTerm direction=vertical<cr>", "Toggle \226\134\146 Terminal"}, {"j", "<cmd>ToggleTerm direction=horizontal<cr>", "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
+map_group("<leader>l", "lang", {"a", _11_, "Code Actions", {mode = {"n", "v"}}}, {"c", vim.lsp.codelens.run, "Codelens"}, {"d", _12_, "Local Diagnostics"}, {"D", _13_, "Workspace Diagnostics"}, {"f", _14_, "Format Buffer", {mode = {"n", "v"}}}, {"h", vim.lsp.buf.document_highlight, "Document Highlight"}, {"r", vim.lsp.buf.rename, "Rename Symbol"}, {"i", _15_, "Toggle Inlay Hint"})
+map_group("<leader>lg", "goto", {"i", vim.lsp.buf.implementation, "Go to Implementation"}, {"d", vim.lsp.buf.definition, "Go to Definition"}, {"D", vim.lsp.buf.declaration, "Go to Declaration"}, {"t", vim.lsp.buf.type_definition, "Go to Type Definition"}, {"r", vim.lsp.buf.references, "Go to References"})
+do
+  local toggle_term
+  local function _16_(direction)
+    local function _17_()
+      local count = vim.v.count
+      local function _18_()
+        if (count > 1) then
+          return tostring(count)
+        else
+          return nil
+        end
+      end
+      return require("toggleterm").toggle(count, nil, nil, direction, _18_())
+    end
+    return _17_
+  end
+  toggle_term = _16_
+  map_group("<leader>t", "term", {"t", toggle_term("float"), "Toggle Floating Terminal"}, {"l", toggle_term("vertical"), "Toggle \226\134\146 Terminal"}, {"j", toggle_term("horizontal"), "Toggle \226\134\147 Terminal"}, {"s", "<cmd>TermSelect<cr>", "Select Terminal"})
+end
 do
   local iron = autoload("iron.core")
   local send_visual
-  local function _16_()
+  local function _19_()
     iron.mark_visual()
     return iron.send_mark()
   end
-  send_visual = _16_
-  local function _17_()
+  send_visual = _19_
+  local function _20_()
     return iron.run_motion("send_motion")
   end
-  local function _18_()
+  local function _21_()
     return iron.send_line()
   end
-  local function _19_()
+  local function _22_()
     return iron.send_file()
   end
-  local function _20_()
+  local function _23_()
     return iron.send_mark()
   end
-  map_group("<leader>r", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _17_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _18_, "Send current line"}, {"f", _19_, "Send the whole file"}, {"m", _20_, "Send marked"})
+  map_group("<leader>r", "repl", {"r", send_visual, "Send visual selection", {mode = "v"}}, {"r", _20_, "Send motion", {mode = "n"}}, {"t", "<cmd>IronRepl<cr>", "Toggle REPL"}, {"l", _21_, "Send current line"}, {"f", _22_, "Send the whole file"}, {"m", _23_, "Send marked"})
 end
 do
   local dap = autoload("dap")
-  local function _21_()
+  local function _24_()
     return dap.continue()
   end
-  local function _22_()
+  local function _25_()
     return dap.toggle_breakpoint()
   end
-  local function _23_()
+  local function _26_()
     return dap.step_over()
   end
-  local function _24_()
+  local function _27_()
     return dap.step_into()
   end
-  local function _25_()
+  local function _28_()
     return dap.step_out()
   end
-  local function _26_()
+  local function _29_()
     return dap.step_back()
   end
-  local function _27_()
+  local function _30_()
     return dap.terminate()
   end
-  map_group("<leader>d", {"d", _21_, "Run / Continue"}, {"b", _22_, "Toggle Breakpoint"}, {"j", _23_, "Step Over"}, {"h", _24_, "Step Into"}, {"l", _25_, "Step Out"}, {"k", _26_, "Step Back"}, {"q", _27_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
+  map_group("<leader>d", "debug", {"d", _24_, "Run / Continue"}, {"b", _25_, "Toggle Breakpoint"}, {"j", _26_, "Step Over"}, {"h", _27_, "Step Into"}, {"l", _28_, "Step Out"}, {"k", _29_, "Step Back"}, {"q", _30_, "Quit Session"}, {"w", "<cmd>DapViewWatch<cr>", "Watch Variable"}, {"v", "<cmd>DapViewToggle<cr>", "Toggle Debug View"})
 end
 do
   local toggle_diags
-  local function _28_()
-    local _let_29_ = vim.diagnostic.config()
-    local virtual_text = _let_29_.virtual_text
-    local virtual_lines = _let_29_.virtual_lines
+  local function _31_()
+    local _let_32_ = vim.diagnostic.config()
+    local virtual_text = _let_32_.virtual_text
+    local virtual_lines = _let_32_.virtual_lines
     return vim.diagnostic.config({virtual_text = not virtual_text, virtual_lines = not virtual_lines})
   end
-  toggle_diags = _28_
+  toggle_diags = _31_
   local mc = require("multicursor-nvim")
-  local function _30_()
+  local function _33_()
     return fzf("commands")
   end
-  local function _31_()
+  local function _34_()
     return fzf("buffers")
   end
-  local function _32_()
+  local function _35_()
     return fzf("undotree")
   end
-  map_group("<leader>", {"<leader>", _30_, "Command Palette"}, {"b", _31_, "Buffers"}, {"u", _32_, "Undo Tree"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
-  local function _33_(layer)
-    local function _34_()
+  map_group("<leader>", "menu", {"<leader>", _33_, "Command Palette"}, {"b", _34_, "Buffers"}, {"u", _35_, "Undo Tree"}, {"D", toggle_diags, "Toggle Diagnostics Style"}, {"g", "<cmd>Neogit<cr>", "Neogit"}, {"w", "<c-w>", "window", {remap = true}}, {"c", mc.toggleCursor, "Multiple Cursors"}, {"c", mc.matchCursors, "Match Cursors", {mode = "v"}})
+  local function _36_(layer)
+    local function _37_()
       if not mc.cursorsEnabled() then
         return mc.enableCursors()
       else
         return nil
       end
     end
-    layer("n", "<cr>", _34_)
-    local function _36_()
+    layer("n", "<cr>", _37_)
+    local function _39_()
       return mc.clearCursors()
     end
-    return layer("n", "<c-c>", _36_)
+    return layer("n", "<c-c>", _39_)
   end
-  mc.addKeymapLayer(_33_)
+  mc.addKeymapLayer(_36_)
 end
-local _let_37_ = require("mini.clue")
-local setup = _let_37_.setup
-local gen_clues = _let_37_.gen_clues
-return setup({triggers = {{mode = "n", keys = "<c-w>"}, {mode = "n", keys = "]"}, {mode = "n", keys = "["}, {mode = "i", keys = "<c-r>"}, {mode = "c", keys = "<c-r>"}, {keys = "<leader>", mode = "n"}, {keys = "g", mode = "n"}, {keys = "`", mode = "n"}, {keys = "'", mode = "n"}, {keys = "\"", mode = "n"}, {keys = "z", mode = "n"}, {keys = "<leader>", mode = "x"}, {keys = "g", mode = "x"}, {keys = "`", mode = "x"}, {keys = "'", mode = "x"}, {keys = "\"", mode = "x"}, {keys = "z", mode = "x"}}, clues = {gen_clues.g(), gen_clues.z(), gen_clues.marks(), gen_clues.registers(), gen_clues.windows({submode_resize = true}), gen_clues.square_brackets(), {{keys = "<leader>dh", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dj", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dk", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dl", mode = "n", postkeys = "<leader>d"}}, {{desc = "file", keys = "<leader>f", mode = "n"}, {desc = "lang", keys = "<leader>l", mode = "n"}, {desc = "goto", keys = "<leader>lg", mode = "n"}, {desc = "debug", keys = "<leader>d", mode = "n"}, {desc = "term", keys = "<leader>t", mode = "n"}, {desc = "repl", keys = "<leader>r", mode = "n"}}}, window = {config = {width = "auto", border = "none"}}})
+local _let_40_ = require("mini.clue")
+local setup = _let_40_.setup
+local gen_clues = _let_40_.gen_clues
+return setup({triggers = {{mode = "n", keys = "<c-w>"}, {mode = "n", keys = "]"}, {mode = "n", keys = "["}, {mode = "i", keys = "<c-r>"}, {mode = "c", keys = "<c-r>"}, {keys = "<leader>", mode = "n"}, {keys = "g", mode = "n"}, {keys = "`", mode = "n"}, {keys = "'", mode = "n"}, {keys = "\"", mode = "n"}, {keys = "z", mode = "n"}, {keys = "<leader>", mode = "x"}, {keys = "g", mode = "x"}, {keys = "`", mode = "x"}, {keys = "'", mode = "x"}, {keys = "\"", mode = "x"}, {keys = "z", mode = "x"}}, clues = {gen_clues.g(), gen_clues.z(), gen_clues.marks(), gen_clues.registers(), gen_clues.windows({submode_resize = true}), gen_clues.square_brackets(), {{keys = "<leader>dh", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dj", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dk", mode = "n", postkeys = "<leader>d"}, {keys = "<leader>dl", mode = "n", postkeys = "<leader>d"}}, key_groups}, window = {config = {width = "auto", border = "none"}}})

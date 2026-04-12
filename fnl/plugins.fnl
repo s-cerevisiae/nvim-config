@@ -12,7 +12,6 @@
 
    ;; Common dependencies
    (github "nvim-lua/plenary.nvim")
-   (github "nvim-tree/nvim-web-devicons")
    (github "MunifTanjim/nui.nvim")
 
    ;; Mini.nvim

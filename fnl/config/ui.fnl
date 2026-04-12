@@ -3,6 +3,9 @@
 
 (vim.cmd.colorscheme :zenupright)
 
+(dot (require "mini.icons") (setup {}))
+(MiniIcons.mock_nvim_web_devicons)
+
 (let [line (require :mini.statusline)]
   (fn content []
     (let [(mode mode_hl) (line.section_mode {:trunc_width 80})

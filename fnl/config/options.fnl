@@ -68,11 +68,12 @@
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader "\\")
 
-(fn set-scrolloff []
-  (let [width (vim.api.nvim_win_get_width 0)
-        height (vim.api.nvim_win_get_height 0)]
-    (set vim.wo.sidescrolloff (quotient width 10))
-    (set vim.wo.scrolloff (quotient height 5))))
+(fn set-scrolloff [info]
+  (when (not (vim.startswith info.file "term://"))
+    (let [width (vim.api.nvim_win_get_width 0)
+          height (vim.api.nvim_win_get_height 0)]
+      (set vim.wo.sidescrolloff (quotient width 10))
+      (set vim.wo.scrolloff (quotient height 5)))))
 
 (doto (augroup "SetScrollOff")
   (autocmd ["BufEnter" "WinEnter" "VimResized"] "*" set-scrolloff))

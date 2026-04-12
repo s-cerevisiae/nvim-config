@@ -19,4 +19,15 @@ highlight link MiniClueNextKeyWithPostKeys Keyword
 highlight link MiniClueDescGroup Special
 highlight link MiniClueSeparator WinSeparator
 
+" mini.icons
+highlight link MiniIconsAzure DiagnosticInfo
+highlight link MiniIconsCyan CocMarkdownLink
+highlight link MiniIconsPurple DiagnosticHint
+highlight link MiniIconsBlue DiagnosticInfo
+highlight link MiniIconsGreen DiagnosticOk
+highlight link MiniIconsGrey Type
+highlight link MiniIconsOrange DiagnosticWarn
+highlight link MiniIconsRed DiagnosticError
+highlight link MiniIconsYellow DiagnosticWarn
+
 let g:colors_name='zenupright'

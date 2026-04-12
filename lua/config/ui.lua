@@ -3,6 +3,8 @@ local _local_1_ = require("utils")
 local augroup = _local_1_.augroup
 local autocmd = _local_1_.autocmd
 vim.cmd.colorscheme("zenupright")
+require("mini.icons").setup({})
+MiniIcons.mock_nvim_web_devicons()
 do
   local line = require("mini.statusline")
   local function content()
