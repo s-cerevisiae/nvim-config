@@ -21,7 +21,7 @@ highlight link MiniClueSeparator WinSeparator
 
 " mini.icons
 highlight link MiniIconsAzure DiagnosticInfo
-highlight link MiniIconsCyan CocMarkdownLink
+highlight link MiniIconsCyan FzfLuaTabTitle
 highlight link MiniIconsPurple DiagnosticHint
 highlight link MiniIconsBlue DiagnosticInfo
 highlight link MiniIconsGreen DiagnosticOk

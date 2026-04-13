@@ -58,17 +58,12 @@
 (let [ts (require :nvim-treesitter)
       always-install ["vimdoc" "markdown" "c" "lua"
                       "rust" "toml" "fennel" "python"]]
-  (ts.install always-install)
-  (let [installed (ts.get_installed)
-        filetypes (-> (vim.iter installed)
-                      (: :map vim.treesitter.language.get_filetypes)
-                      (: :flatten)
-                      (: :totable))]
-    (if (not (vim.tbl_isempty filetypes))
-      (autocmd (augroup "NvimTreesitterCfg")
-        "FileType" filetypes
-        #(do (vim.treesitter.start)
-             (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()"))))))
+  (ts.install always-install))
+
+(autocmd (augroup "NvimTreesitterCfg")
+  "FileType" "*"
+  #(if (pcall vim.treesitter.start)
+       (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()")))
 
 ;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")

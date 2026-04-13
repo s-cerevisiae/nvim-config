@@ -22,15 +22,15 @@
       "src": "https://github.com/folke/flash.nvim"
     },
     "flatten.nvim": {
-      "rev": "27db43978783f93d7c1b1ed484c8f596220f6e51",
+      "rev": "e252bd0efa338b19ec7956c9772df6c91d1b1377",
       "src": "https://github.com/s-cerevisiae/flatten.nvim"
     },
     "fzf-lua": {
-      "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
+      "rev": "1e866cce085cc6df3d3e4fb59f00105fa84cef6c",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "0d797daee85366bc242580e352a4f62d67557b84",
+      "rev": "8d82c240f190fc33723d48c308ccc1ed8baad69d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "incline.nvim": {
@@ -42,7 +42,7 @@
       "src": "https://github.com/Vigemus/iron.nvim"
     },
     "mini.nvim": {
-      "rev": "2431902e78b76f435542d1e606f08475360068ca",
+      "rev": "c67822c53e8e282fe863343e88aa0a8ca3534059",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "multicursor.nvim": {
@@ -55,11 +55,11 @@
       "version": "'v3.x'"
     },
     "neogit": {
-      "rev": "5432fe2b2565bb10d868c759245cd4c64125da31",
+      "rev": "e06745228600a585b88726fc9fba44a373c15a47",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "nfnl": {
-      "rev": "f39a7ec6fe0ace2b2ea108ce04d954549e36c76d",
+      "rev": "ac0177c5549df7abba7a19554c18a7765386c894",
       "src": "https://github.com/Olical/nfnl"
     },
     "nui.nvim": {
@@ -75,7 +75,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-view": {
-      "rev": "e57ac4051aa56293e89991ab93bc148de35321ca",
+      "rev": "e44892210cfa98d23bf22b82b345213d742b9bee",
       "src": "https://github.com/igorlfs/nvim-dap-view"
     },
     "nvim-insx": {
@@ -87,7 +87,7 @@
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
     "nvim-lspconfig": {
-      "rev": "bedca8b426b2fee0ccac596d167d71bbe971253f",
+      "rev": "8a9378a822719346a0288fa004dab302ca3c0a8f",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -111,15 +111,15 @@
       "src": "https://github.com/s-cerevisiae/parinfer-rust"
     },
     "plenary.nvim": {
-      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "54d4b5431e9634ee3d8d30784e017239b5b89d41",
+      "rev": "0fd43fb4b1f073931c4b481f5f3b7cea3749e190",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "6c4c158b23690ef7cc65349077eae29a6be35a6c",
+      "rev": "b9fea85bd55010b10c79bbe4707ce3ddb7638e42",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "toggleterm.nvim": {

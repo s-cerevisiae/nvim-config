@@ -19,13 +19,16 @@
           diff (line.section_diff {:trunc_width 40})
           diags (line.section_diagnostics {:trunc_width 40 :icon ""
                                            :signs {:ERROR "󰅘 " :WARN "󰀪 " :INFO "󰋽 " :HINT "󰌶 "}})
+          search (line.section_searchcount {:trunc_width 40})
           file (line.section_fileinfo {:trunc_width 80})
           loc "%02l│%02v"]
       (line.combine_groups [{:hl mode_hl :strings (vim.list_extend [mode] tabs)}
                             "%T"
                             {:hl "StatusLine" :strings [git]}
+                            "%<"
                             {:hl "StatusLineNC" :strings [vim.b.gitsigns_status diags]}
-                            "%<%="
+                            "%="
+                            {:strings [search]}
                             {:hl "StatusLine" :strings [file]}
                             {:hl mode_hl :strings [loc]}])))
   (line.setup {:content {:active content}}))

@@ -48,18 +48,16 @@ do
   local ts = require("nvim-treesitter")
   local always_install = {"vimdoc", "markdown", "c", "lua", "rust", "toml", "fennel", "python"}
   ts.install(always_install)
-  local installed = ts.get_installed()
-  local filetypes = vim.iter(installed):map(vim.treesitter.language.get_filetypes):flatten():totable()
-  if not vim.tbl_isempty(filetypes) then
-    local function _8_()
-      vim.treesitter.start()
-      vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-      return nil
-    end
-    autocmd(augroup("NvimTreesitterCfg"), "FileType", filetypes, _8_)
+end
+local function _8_()
+  if pcall(vim.treesitter.start) then
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    return nil
   else
+    return nil
   end
 end
+autocmd(augroup("NvimTreesitterCfg"), "FileType", "*", _8_)
 do
   local tmp_9_ = augroup("FileTypeMisc")
   local function _10_()

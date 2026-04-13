@@ -35,9 +35,10 @@ do
     local git = line.section_git({trunc_width = 40})
     local diff = line.section_diff({trunc_width = 40})
     local diags = line.section_diagnostics({trunc_width = 40, icon = "", signs = {ERROR = "\243\176\133\152 ", WARN = "\243\176\128\170 ", INFO = "\243\176\139\189 ", HINT = "\243\176\140\182 "}})
+    local search = line.section_searchcount({trunc_width = 40})
     local file = line.section_fileinfo({trunc_width = 80})
     local loc = "%02l\226\148\130%02v"
-    return line.combine_groups({{hl = mode_hl, strings = vim.list_extend({mode}, tabs)}, "%T", {hl = "StatusLine", strings = {git}}, {hl = "StatusLineNC", strings = {vim.b.gitsigns_status, diags}}, "%<%=", {hl = "StatusLine", strings = {file}}, {hl = mode_hl, strings = {loc}}})
+    return line.combine_groups({{hl = mode_hl, strings = vim.list_extend({mode}, tabs)}, "%T", {hl = "StatusLine", strings = {git}}, "%<", {hl = "StatusLineNC", strings = {vim.b.gitsigns_status, diags}}, "%=", {strings = {search}}, {hl = "StatusLine", strings = {file}}, {hl = mode_hl, strings = {loc}}})
   end
   line.setup({content = {active = content}})
 end
