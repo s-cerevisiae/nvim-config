@@ -1,5 +1,4 @@
 -- [nfnl] fnl/config/editing.fnl
-require("flash").setup({modes = {search = {enabled = true}, char = {enabled = false}}, prompt = {enabled = true, prefix = {{"r/", "FlashPromptIcon"}}}})
 require("multicursor-nvim").setup()
 require("mini.align").setup()
 require("mini.comment").setup({options = {ignore_blank_line = true}})

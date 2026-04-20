@@ -29,11 +29,8 @@
   :undofile true
 
   ;; Use smartcase.
-  ;; !!Also works for nvim-cmp!!
   :ignorecase true
   :smartcase true
-
-  :complete ""
 
   :updatetime 300
 

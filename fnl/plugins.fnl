@@ -3,6 +3,11 @@
 (fn github [repo]
   (.. "https://github.com/" repo))
 
+(fn codeberg [repo]
+  (.. "https://codeberg.org/" repo))
+
+(vim.cmd.packadd :nvim.difftool)
+
 (vim.pack.add
   [;; Colorscheme
    (do (set vim.g.bones_compat 1)
@@ -42,7 +47,7 @@
    (github "NeogitOrg/neogit")
 
    ;; Editing
-   (github "folke/flash.nvim")
+   (codeberg "andyg/leap.nvim")
    (do (set vim.g.nvim_surround_no_mappings true)
      (github "kylechui/nvim-surround"))
    (github "jake-stewart/multicursor.nvim")

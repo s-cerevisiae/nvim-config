@@ -47,9 +47,9 @@
 
 (let [fzf (require :fzf-lua)
       opts {:fzf_colors true
-             :winopts #(let [small (< vim.o.lines 30)]
-                         {:fullscreen small
-                          :preview {:wrap "wrap"
-                                    :hidden (if small "hidden" "nohidden")}})}]
+            :winopts #(let [small (< vim.o.lines 30)]
+                        {:fullscreen small
+                         :preview {:wrap "wrap"
+                                   :hidden (if small "hidden" "nohidden")}})}]
   (fzf.setup opts)
   (fzf.register_ui_select))

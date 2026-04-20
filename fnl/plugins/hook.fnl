@@ -24,8 +24,7 @@
     #(do (each [_ args (ipairs pending-events)]
            (run args))
          (set pending-events nil)))
-  (autocmd
-    "PackChanged" "*"
+  (autocmd "PackChanged" "*"
     (fn [{:data {:spec {: name} : kind : active : path}}]
       (local args {: name : kind : active : path})
       (if pending-events

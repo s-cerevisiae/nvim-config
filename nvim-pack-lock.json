@@ -17,10 +17,6 @@
       "rev": "30b9beabad2c4f09b9b284caf5cd5666b6b4dc89",
       "src": "https://github.com/bakpakin/fennel.vim"
     },
-    "flash.nvim": {
-      "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
-      "src": "https://github.com/folke/flash.nvim"
-    },
     "flatten.nvim": {
       "rev": "e252bd0efa338b19ec7956c9772df6c91d1b1377",
       "src": "https://github.com/s-cerevisiae/flatten.nvim"
@@ -40,6 +36,10 @@
     "iron.nvim": {
       "rev": "88cd340407b959f1168af2a6ae5a3d180e6df32c",
       "src": "https://github.com/Vigemus/iron.nvim"
+    },
+    "leap.nvim": {
+      "rev": "b960d5038c5c505c52e56a54490f9bbb1f0e6ef6",
+      "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "mini.nvim": {
       "rev": "c67822c53e8e282fe863343e88aa0a8ca3534059",

@@ -41,4 +41,23 @@ local function _9_(_5_)
   vim.api.nvim_echo({{(message or "done")}}, false, {id = ("lsp." .. client_id .. "." .. title), kind = "progress", source = "vim.lsp", title = title, status = _10_, percent = percentage})
   return nil
 end
-return autocmd(augroup("LspProg"), "LspProgress", "*", _9_)
+autocmd(augroup("LspProg"), "LspProgress", "*", _9_)
+local function _12_()
+  local cmdtype = vim.v.event.cmdtype
+  local abort = vim.v.event.abort
+  local function _13_()
+    local and_14_ = ((cmdtype == "/") or (cmdtype == "?")) and not abort
+    if and_14_ then
+      and_14_ = (vim.fn.searchcount().total > 1)
+    end
+    if and_14_ then
+      local leap = require("leap")
+      return leap.leap({pattern = vim.fn.getreg("/"), windows = require("leap.user").get_focusable_windows(), opts = {safe_labels = "", labels = leap.opts.safe_labels:gsub("[nN/?]", ""), vim_opts = {["wo.conceallevel"] = vim.wo.conceallevel}}})
+    else
+      return nil
+    end
+  end
+  vim.schedule(_13_)
+  return nil
+end
+return autocmd(augroup("JumpOnSearch"), "CmdlineLeave", "*", _12_)

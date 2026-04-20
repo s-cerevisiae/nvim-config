@@ -11,19 +11,19 @@
   {:expr true :silent true})
 
 ;; System clipboard shortcuts
-(vim.keymap.set ["n" "v"] "<leader>y"
+(vim.keymap.set ["n" "x"] "<leader>y"
   "\"+y"
   {:remap true
    :desc "y to clip"})
-(vim.keymap.set ["n" "v"] "<leader>Y"
+(vim.keymap.set ["n" "x"] "<leader>Y"
   "\"+Y"
   {:remap true
    :desc "Y to clip"})
-(vim.keymap.set ["n" "v"] "<leader>p"
+(vim.keymap.set ["n" "x"] "<leader>p"
   "\"+p"
   {:remap true
    :desc "p from clip"})
-(vim.keymap.set ["n" "v"] "<leader>P"
+(vim.keymap.set ["n" "x"] "<leader>P"
   "\"+P"
   {:remap true
    :desc "P from clip"})
@@ -41,7 +41,7 @@
 
 ;; Flash "remote" actions
 (vim.keymap.set ["o"] "r"
-  #(dot (require :flash) (remote)))
+  #(dot (require :leap.remote) (action)))
 
 ;; nvim-surround
 (do
@@ -94,10 +94,11 @@
 (map-group "<leader>f" "file"
   ["f" #(fzf :files) "File Finder"]
   ["b" "<cmd>Oil<cr>" "File Browser"]
+  ["g" #(fzf :live_grep) "File Grep"]
   ["t" "<cmd>Neotree toggle reveal=true position=current<cr>" "File Tree"])
 
 (map-group "<leader>l" "lang"
-  ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "v"]}]
+  ["a" #(fzf :lsp_code_actions) "Code Actions" {:mode ["n" "x"]}]
   ["c" vim.lsp.codelens.run "Codelens"]
   ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
   ["D" #(fzf :diagnostics_workspace {:sort true}) "Workspace Diagnostics"]
@@ -106,7 +107,7 @@
                       :stop_after_first true
                       :async true}))
        "Format Buffer"
-       {:mode ["n" "v"]}]
+       {:mode ["n" "x"]}]
   ["h" vim.lsp.buf.document_highlight "Document Highlight"]
   ["r" vim.lsp.buf.rename "Rename Symbol"]
   ["i" #(vim.lsp.inlay_hint.enable
@@ -135,7 +136,7 @@
       send-visual #(do (iron.mark_visual)
                        (iron.send_mark))]
   (map-group "<leader>r" "repl"
-    ["r" send-visual "Send visual selection" {:mode "v"}]
+    ["r" send-visual "Send visual selection" {:mode "x"}]
     ["r" #(iron.run_motion "send_motion") "Send motion" {:mode "n"}]
     ["t" "<cmd>IronRepl<cr>" "Toggle REPL"]
     ["l" #(iron.send_line) "Send current line"]
@@ -159,16 +160,28 @@
                       (vim.diagnostic.config
                         {:virtual_text (not virtual_text)
                          :virtual_lines (not virtual_lines)}))
+      open-file #(-> (vim.fn.expand "<cfile>")
+                     (vim.fn.findfile)
+                     (vim.ui.open))
+      open-file-visual #(-> (vim.fn.getregion (vim.fn.getpos "v")
+                                              (vim.fn.getpos ".")
+                                              {:type (vim.fn.mode)})
+                            (. 1)
+                            (vim.fn.findfile)
+                            (vim.ui.open))
       mc (require :multicursor-nvim)]
   (map-group "<leader>" "menu"
     ["<leader>" #(fzf :commands) "Command Palette"]
     ["b" #(fzf :buffers) "Buffers"]
+    ["o" open-file "Open file in system"]
+    ["o" open-file-visual "Open file in system" {:mode "x"}]
     ["u" #(fzf :undotree) "Undo Tree"]
     ["D" toggle-diags "Toggle Diagnostics Style"]
     ["g" "<cmd>Neogit<cr>" "Neogit"]
     ["w" "<c-w>" "window" {:remap true}]
+    ["s" "<Plug>(leap-anywhere)" "Leap"]
     ["c" mc.toggleCursor "Multiple Cursors"]
-    ["c" mc.matchCursors "Match Cursors" {:mode "v"}])
+    ["c" mc.matchCursors "Match Cursors" {:mode "x"}])
 
   (mc.addKeymapLayer
    (fn [layer]

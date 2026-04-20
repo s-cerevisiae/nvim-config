@@ -1,3 +1,4 @@
+(import-macros {: dot} :macros)
 (local {: augroup : autocmd} (require :utils))
 
 ;; highlight on yank
@@ -28,3 +29,19 @@
        :status (if (~= kind "end") "running" "success")
        :percent percentage})
     nil))
+
+(autocmd (augroup "JumpOnSearch")
+         "CmdlineLeave" "*"
+  #(let [{: cmdtype : abort} vim.v.event]
+     (vim.schedule
+       #(when (and (or (= cmdtype "/")
+                       (= cmdtype "?"))
+                   (not abort)
+                   (> (dot (vim.fn.searchcount) total) 1))
+          (let [leap (require :leap)]
+            (leap.leap {:pattern (vim.fn.getreg "/")
+                        :windows (dot (require :leap.user) (get_focusable_windows))
+                        :opts {:safe_labels ""
+                               :labels (leap.opts.safe_labels:gsub "[nN/?]" "")
+                               :vim_opts {:wo.conceallevel vim.wo.conceallevel}}}))))
+     nil))

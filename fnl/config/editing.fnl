@@ -1,11 +1,5 @@
 (import-macros {: dot} :macros)
 
-(dot (require :flash)
-     (setup {:modes {:search {:enabled true}
-                     :char {:enabled false}}
-             :prompt {:enabled true
-                      :prefix [["r/" "FlashPromptIcon"]]}}))
-
 (dot (require :multicursor-nvim) (setup))
 
 (dot (require :mini.align) (setup))
