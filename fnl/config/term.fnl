@@ -6,6 +6,8 @@
                      (match term.direction
                        :horizontal (quotient vim.o.lines 4)
                        :vertical (quotient vim.o.columns 2)))
+             ;; I never asked for this
+             :auto_scroll false
              ;; this interferes with my autocmds
              :start_in_insert false
              :persist_mode false}))

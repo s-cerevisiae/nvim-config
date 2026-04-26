@@ -46,11 +46,7 @@ local function _12_()
   local cmdtype = vim.v.event.cmdtype
   local abort = vim.v.event.abort
   local function _13_()
-    local and_14_ = ((cmdtype == "/") or (cmdtype == "?")) and not abort
-    if and_14_ then
-      and_14_ = (vim.fn.searchcount().total > 1)
-    end
-    if and_14_ then
+    if (((cmdtype == "/") or (cmdtype == "?")) and not abort) then
       local leap = require("leap")
       return leap.leap({pattern = vim.fn.getreg("/"), windows = require("leap.user").get_focusable_windows(), opts = {safe_labels = "", labels = leap.opts.safe_labels:gsub("[nN/?]", ""), vim_opts = {["wo.conceallevel"] = vim.wo.conceallevel}}})
     else

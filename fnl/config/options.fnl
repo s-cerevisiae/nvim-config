@@ -21,6 +21,9 @@
   :shiftwidth 4
   :expandtab true
 
+  ;; Open all folds by default
+  :foldlevel 99
+
   ;; True colors
   :termguicolors true
 

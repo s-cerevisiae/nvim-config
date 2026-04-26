@@ -12,7 +12,7 @@ local function _2_(term)
     return nil
   end
 end
-require("toggleterm").setup({size = _2_, persist_mode = false, start_in_insert = false})
+require("toggleterm").setup({size = _2_, auto_scroll = false, persist_mode = false, start_in_insert = false})
 local function cursor_line()
   return vim.api.nvim_win_get_cursor(0)[1]
 end

@@ -52,46 +52,59 @@ end
 local function _8_()
   if pcall(vim.treesitter.start) then
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.wo.foldmethod = "expr"
     return nil
   else
     return nil
   end
 end
 autocmd(augroup("NvimTreesitterCfg"), "FileType", "*", _8_)
+local function _12_(_10_)
+  local _arg_11_ = _10_.data
+  local client_id = _arg_11_.client_id
+  if vim.lsp.get_client_by_id(client_id):supports_method("textDocument/foldingRange") then
+    vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+    vim.wo.foldmethod = "expr"
+    return nil
+  else
+    return nil
+  end
+end
+autocmd(augroup("LspFold"), "LspAttach", "*", _12_)
 do
   local tmp_9_ = augroup("FileTypeMisc")
-  local function _10_()
+  local function _14_()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
     return nil
   end
-  autocmd(tmp_9_, "Filetype", {"javascript", "typescript", "css", "javascriptreact", "typescriptreact", "ocaml", "prolog", "scheme", "lua"}, _10_)
-  local function _11_()
-    local function _12_()
+  autocmd(tmp_9_, "Filetype", {"javascript", "typescript", "css", "javascriptreact", "typescriptreact", "ocaml", "prolog", "scheme", "lua"}, _14_)
+  local function _15_()
+    local function _16_()
       return vim.cmd.RustLsp("hover", "actions")
     end
-    vim.keymap.set("n", "K", _12_, {silent = true, buffer = 0})
+    vim.keymap.set("n", "K", _16_, {silent = true, buffer = 0})
     return nil
   end
-  autocmd(tmp_9_, "Filetype", "rust", _11_)
+  autocmd(tmp_9_, "Filetype", "rust", _15_)
 end
 local function write_data_clj(buf)
   local script_file = vim.api.nvim_buf_get_name(buf)
   local data_file = string.sub(script_file, 1, -10)
-  local function _14_(_13_)
-    local stdout = _13_.stdout
+  local function _18_(_17_)
+    local stdout = _17_.stdout
     local tmp_9_ = io.open(data_file, "w")
     tmp_9_:write(stdout)
     tmp_9_:close()
     return tmp_9_
   end
-  return vim.system({"bb", "-f", script_file}, {}, _14_)
+  return vim.system({"bb", "-f", script_file}, {}, _18_)
 end
 local tmp_9_ = augroup("DataClj")
-local function _16_(_15_)
-  local buf = _15_.buf
+local function _20_(_19_)
+  local buf = _19_.buf
   write_data_clj(buf)
   return nil
 end
-autocmd(tmp_9_, "BufWritePost", "*.data.clj", _16_)
+autocmd(tmp_9_, "BufWritePost", "*.data.clj", _20_)
 return tmp_9_

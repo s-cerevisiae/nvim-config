@@ -36,8 +36,7 @@
      (vim.schedule
        #(when (and (or (= cmdtype "/")
                        (= cmdtype "?"))
-                   (not abort)
-                   (> (dot (vim.fn.searchcount) total) 1))
+                   (not abort))
           (let [leap (require :leap)]
             (leap.leap {:pattern (vim.fn.getreg "/")
                         :windows (dot (require :leap.user) (get_focusable_windows))

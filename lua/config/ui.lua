@@ -5,6 +5,7 @@ local autocmd = _local_1_.autocmd
 vim.cmd.colorscheme("zenupright")
 require("mini.icons").setup({})
 MiniIcons.mock_nvim_web_devicons()
+require("mini.indentscope").setup({})
 do
   local line = require("mini.statusline")
   local function content()
@@ -33,16 +34,25 @@ do
       tabs = tbl_26_
     end
     local git = line.section_git({trunc_width = 40})
-    local diff = line.section_diff({trunc_width = 40})
+    local diff = vim.b.gitsigns_status
     local diags = line.section_diagnostics({trunc_width = 40, icon = "", signs = {ERROR = "\243\176\133\152 ", WARN = "\243\176\128\170 ", INFO = "\243\176\139\189 ", HINT = "\243\176\140\182 "}})
     local search = line.section_searchcount({trunc_width = 40})
+    local record
+    do
+      local reg = vim.fn.reg_recording()
+      if (reg ~= "") then
+        record = ("\243\176\139\177 " .. reg)
+      else
+        record = nil
+      end
+    end
     local file = line.section_fileinfo({trunc_width = 80})
     local loc = "%02l\226\148\130%02v"
-    return line.combine_groups({{hl = mode_hl, strings = vim.list_extend({mode}, tabs)}, "%T", {hl = "StatusLine", strings = {git}}, "%<", {hl = "StatusLineNC", strings = {vim.b.gitsigns_status, diags}}, "%=", {strings = {search}}, {hl = "StatusLine", strings = {file}}, {hl = mode_hl, strings = {loc}}})
+    return line.combine_groups({{hl = mode_hl, strings = vim.list_extend({mode}, tabs)}, "%T", {hl = "StatusLine", strings = {git}}, "%<", {hl = "StatusLineNC", strings = {diff, diags}}, "%=", {strings = {search, record}}, {hl = "StatusLine", strings = {file}}, {hl = mode_hl, strings = {loc}}})
   end
   line.setup({content = {active = content}})
 end
-local function _4_(props)
+local function _5_(props)
   local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":~:.")
   local indicator
   if vim.bo[props.buf].modified then
@@ -54,19 +64,19 @@ local function _4_(props)
   end
   return {indicator, filename}
 end
-require("incline").setup({hide = {cursorline = true}, window = {margin = {vertical = 0, horizontal = 0}}, render = _4_})
+require("incline").setup({hide = {cursorline = true}, window = {margin = {vertical = 0, horizontal = 0}}, render = _5_})
 local fzf = require("fzf-lua")
 local opts
-local function _6_()
+local function _7_()
   local small = (vim.o.lines < 30)
-  local _7_
+  local _8_
   if small then
-    _7_ = "hidden"
+    _8_ = "hidden"
   else
-    _7_ = "nohidden"
+    _8_ = "nohidden"
   end
-  return {fullscreen = small, preview = {wrap = "wrap", hidden = _7_}}
+  return {fullscreen = small, preview = {wrap = "wrap", hidden = _8_}}
 end
-opts = {fzf_colors = true, winopts = _6_}
+opts = {fzf_colors = true, winopts = _7_}
 fzf.setup(opts)
 return fzf.register_ui_select()

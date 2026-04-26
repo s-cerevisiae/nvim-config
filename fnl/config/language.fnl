@@ -62,8 +62,18 @@
 
 (autocmd (augroup "NvimTreesitterCfg")
   "FileType" "*"
-  #(if (pcall vim.treesitter.start)
-       (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()")))
+  #(when (pcall vim.treesitter.start)
+     (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()")
+     (set vim.wo.foldmethod "expr")))
+
+;; Enable LSP fold if supported
+(autocmd (augroup "LspFold")
+         "LspAttach" "*"
+  (fn [{:data {: client_id}}]
+    (when (-> (vim.lsp.get_client_by_id client_id)
+              (: :supports_method "textDocument/foldingRange"))
+      (set vim.wo.foldexpr "v:lua.vim.lsp.foldexpr()")
+      (set vim.wo.foldmethod "expr"))))
 
 ;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")
