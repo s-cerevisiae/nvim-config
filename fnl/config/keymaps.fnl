@@ -39,9 +39,8 @@
   #(vim.snippet.jump -1)
   {:expr true :silent true})
 
-;; Flash "remote" actions
-(vim.keymap.set ["o"] "r"
-  #(dot (require :leap.remote) (action)))
+;; Leap "remote" actions
+(vim.keymap.set "o" "r" "<Plug>(leap-visit)")
 
 ;; nvim-surround
 (do
@@ -102,10 +101,7 @@
   ["c" vim.lsp.codelens.run "Codelens"]
   ["d" #(fzf :diagnostics_document {:sort true}) "Local Diagnostics"]
   ["D" #(fzf :diagnostics_workspace {:sort true}) "Workspace Diagnostics"]
-  ["f" #(dot (require :conform)
-             (format {:lsp_fallback true
-                      :stop_after_first true
-                      :async true}))
+  ["f" #(dot (require :conform) (format))
        "Format Buffer"
        {:mode ["n" "x"]}]
   ["h" vim.lsp.buf.document_highlight "Document Highlight"]
@@ -187,7 +183,7 @@
    (fn [layer]
      (layer "n" "<cr>" #(when (not (mc.cursorsEnabled))
                           (mc.enableCursors)))
-     (layer "n" "<c-c>" #(mc.clearCursors)))))
+     (layer "n" "<c-l>" #(mc.clearCursors)))))
 
 (macro triggers [modes keys & rest]
   (each [_ m (ipairs modes)]

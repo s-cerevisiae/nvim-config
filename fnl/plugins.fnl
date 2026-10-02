@@ -10,8 +10,9 @@
 
 (vim.pack.add
   [;; Colorscheme
-   (do (set vim.g.bones_compat 1)
-     (github "mcchrish/zenbones.nvim"))
+   (github "rktjmp/lush.nvim")
+   {:src (github "s-cerevisiae/zenbones.nvim")
+    :version "cache"}
    ;; Fennel compiler
    (github "Olical/nfnl")
 
@@ -58,7 +59,7 @@
                       (fn [{: stdout : stderr}]
                         (print stdout)
                         (print stderr))))
-     (github "s-cerevisiae/parinfer-rust"))
+     (github "eraserhd/parinfer-rust"))
    (github "tpope/vim-repeat")
 
    ;; Language
@@ -73,6 +74,8 @@
    (github "LnL7/vim-nix")
    (github "bakpakin/fennel.vim")
    (github "kaarmu/typst.vim")
+   {:src (codeberg "spore/nxd.vim")
+    :version "dev"}
    ;;; REPL
    (github "Vigemus/iron.nvim")
    ;;; Render

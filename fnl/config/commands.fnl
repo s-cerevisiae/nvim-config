@@ -1,6 +1,11 @@
 (vim.api.nvim_create_user_command "PackUpdate"
-  #(vim.pack.update)
-  {:nargs 0})
+  (fn [{:fargs names}]
+    (if (vim.tbl_isempty names)
+        (vim.pack.update)
+        (vim.pack.update names)))
+  {:nargs "*"
+   :complete #(icollect [_ p (ipairs (vim.pack.get nil {:info false}))]
+                p.spec.name)})
 
 (vim.api.nvim_create_user_command "PackSync"
   #(vim.pack.update nil {:target "lockfile"})

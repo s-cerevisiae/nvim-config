@@ -1,5 +1,8 @@
 (import-macros {: dot} :macros)
 
+(let [leap (require :leap)]
+  (set leap.opts.safe_labels "fnut/FNLHMUGTZ?"))
+
 (dot (require :multicursor-nvim) (setup))
 
 (dot (require :mini.align) (setup))

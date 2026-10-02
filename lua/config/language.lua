@@ -42,7 +42,7 @@ do
     end
     _6_ = tbl_21_
   end
-  require("conform").setup({formatters_by_ft = vim.tbl_extend("keep", _4_, _6_, {python = {"ruff_format"}})})
+  require("conform").setup({default_format_opts = {lsp_format = "fallback", stop_after_first = true, async = true}, formatters_by_ft = vim.tbl_extend("keep", _4_, _6_, {python = {"ruff_format"}})})
 end
 do
   local ts = require("nvim-treesitter")
@@ -51,8 +51,8 @@ do
 end
 local function _8_()
   if pcall(vim.treesitter.start) then
-    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-    vim.wo.foldmethod = "expr"
+    vim["wo"][0][0]["foldexpr"] = "v:lua.vim.treesitter.foldexpr()"
+    vim["wo"][0][0]["foldmethod"] = "expr"
     return nil
   else
     return nil
@@ -63,8 +63,8 @@ local function _12_(_10_)
   local _arg_11_ = _10_.data
   local client_id = _arg_11_.client_id
   if vim.lsp.get_client_by_id(client_id):supports_method("textDocument/foldingRange") then
-    vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
-    vim.wo.foldmethod = "expr"
+    vim["wo"][0][0]["foldexpr"] = "v:lua.vim.lsp.foldexpr()"
+    vim["wo"][0][0]["foldmethod"] = "expr"
     return nil
   else
     return nil

@@ -47,7 +47,11 @@
       ;; Not supported by biome yet
       web-extra-fts ["scss"]]
   (dot (require :conform)
-       (setup {:formatters_by_ft
+       (setup {:default_format_opts
+               {:lsp_format "fallback"
+                :stop_after_first true
+                :async true}
+               :formatters_by_ft
                (vim.tbl_extend "keep"
                  (collect [_ ft (pairs web-fts)]
                    ft ["biome" "prettier"])
@@ -63,8 +67,8 @@
 (autocmd (augroup "NvimTreesitterCfg")
   "FileType" "*"
   #(when (pcall vim.treesitter.start)
-     (set vim.wo.foldexpr "v:lua.vim.treesitter.foldexpr()")
-     (set vim.wo.foldmethod "expr")))
+     (set (. vim :wo 0 0 :foldexpr) "v:lua.vim.treesitter.foldexpr()")
+     (set (. vim :wo 0 0 :foldmethod) "expr")))
 
 ;; Enable LSP fold if supported
 (autocmd (augroup "LspFold")
@@ -72,8 +76,8 @@
   (fn [{:data {: client_id}}]
     (when (-> (vim.lsp.get_client_by_id client_id)
               (: :supports_method "textDocument/foldingRange"))
-      (set vim.wo.foldexpr "v:lua.vim.lsp.foldexpr()")
-      (set vim.wo.foldmethod "expr"))))
+      (set (. vim :wo 0 0 :foldexpr) "v:lua.vim.lsp.foldexpr()")
+      (set (. vim :wo 0 0 :foldmethod) "expr"))))
 
 ;; Aggregated ftplugin configs
 (doto (augroup "FileTypeMisc")

@@ -16,6 +16,9 @@
 
   :cursorline true
 
+  ;; Works better with 'wrap'
+  :smoothscroll true
+
   ;; Consistent tabstop & indentation
   :tabstop 4
   :shiftwidth 4
@@ -72,8 +75,8 @@
   (when (not (vim.startswith info.file "term://"))
     (let [width (vim.api.nvim_win_get_width 0)
           height (vim.api.nvim_win_get_height 0)]
-      (set vim.wo.sidescrolloff (quotient width 10))
-      (set vim.wo.scrolloff (quotient height 5)))))
+      (set (. vim :wo 0 0 :sidescrolloff) (quotient width 10))
+      (set (. vim :wo 0 0 :scrolloff) (quotient height 5)))))
 
 (doto (augroup "SetScrollOff")
   (autocmd ["BufEnter" "WinEnter" "VimResized"] "*" set-scrolloff))

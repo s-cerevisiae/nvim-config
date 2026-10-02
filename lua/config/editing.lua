@@ -1,4 +1,8 @@
 -- [nfnl] fnl/config/editing.fnl
+do
+  local leap = require("leap")
+  leap.opts.safe_labels = "fnut/FNLHMUGTZ?"
+end
 require("multicursor-nvim").setup()
 require("mini.align").setup()
 require("mini.comment").setup({options = {ignore_blank_line = true}})
